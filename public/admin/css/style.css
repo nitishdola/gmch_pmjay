@@ -15210,4 +15210,8 @@ body {
   breakpoint-lg: 992px;
   breakpoint-xl: 1200px;
 }
+
+.black-text { color: #000 !important; }
+.warning-text { color: #F69619 !important; }
+.red-text { color: #FF0404 !important; }
 /*# sourceMappingURL=style.css.map */

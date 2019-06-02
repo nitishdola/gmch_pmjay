@@ -361,4 +361,24 @@ class Helper
 
         return $total_srl_cost;
 	} 
+
+	public static function checkIfAllowed($beneficiary_details_id) {
+		$beneficiary_details = DB::table('beneficiary_details')->select('beneficiary_ta_date')->where('id', $beneficiary_details_id)->first();
+
+		if($beneficiary_details->beneficiary_ta_date != '') {
+			$beneficiary_ta_date = $beneficiary_details->beneficiary_ta_date;
+
+			$now = time();
+			$beneficiary_ta_date = strtotime($beneficiary_ta_date);
+			$datediff = $now - $beneficiary_ta_date;
+
+			$gap = round($datediff / (60 * 60 * 24));
+
+			if($gap > 15) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

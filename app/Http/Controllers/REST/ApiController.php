@@ -5,7 +5,7 @@ namespace App\Http\Controllers\REST;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon;
+use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon, Helper;
 use App\Models\BeneficiaryDetail;
 use App\Models\OldData\BeneficiaryDetailOldData;
 use App\Models\Master\LabTest;
@@ -41,5 +41,37 @@ class ApiController extends Controller
             return 0;
         }
         
+    }
+
+    public function getBalance(Request $request) {
+        $beneficiary_details = BeneficiaryDetail::find($request->beneficiary_details_id);
+
+        $entered_amount = $request->amount;
+
+        $package_amount = Helper::getPackage($request->beneficiary_details_id)['amount'];
+
+        $total_cost = Helper::getInvestigationCost($request->beneficiary_details_id)
+                        +Helper::getDialysisCost($request->beneficiary_details_id)
+                        +Helper::getBloodTransfusionCost($request->beneficiary_details_id)
+                        +Helper::getEndorscopyCost($request->beneficiary_details_id)
+                        +Helper::getBedCost($request->beneficiary_details_id)
+                        +Helper::getIcuCost($request->beneficiary_details_id)
+                        +Helper::getOTCost($request->beneficiary_details_id)
+                        +Helper::getPetCetCost($request->beneficiary_details_id)
+                        +Helper::getVendorReimbursementCost($request->beneficiary_details_id)
+                        +Helper::getBeneficiaryReimbursementCost($request->beneficiary_details_id)
+                        +Helper::getMedicineCost($request->beneficiary_details_id)
+                        -Helper::getMedicineReturnCost($request->beneficiary_details_id)
+                        +Helper::getTACost($request->beneficiary_details_id)
+                        +Helper::getSRLCost($request->beneficiary_details_id)
+                        +$entered_amount;
+
+        $arr = [];
+
+        $arr['package_amount']  = $package_amount;
+        $arr['total_cost']      = $total_cost;
+        $arr['remaining_balance']      = $package_amount - $total_cost;
+
+        return json_encode($arr);
     }
 }

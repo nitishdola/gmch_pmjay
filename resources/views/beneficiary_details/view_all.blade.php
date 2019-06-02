@@ -84,12 +84,14 @@
                     <td id="deducted_by_sha_{{$v->id}}">{{ $v->deducted_by_sha }}</td>
                     <td><a href="{{ route('beneficary_details.view_beneficiary', $v->id) }}" class="btn btn-sm btn-primary"> <i class="fa fa-info" aria-hidden="true"></i> View Details</a>
                       <br>
+                      @if($v->is_cancelled != 1)
                       @if($v->cliams_received <= 0)
                           <a href="javascript:void(0)" id="add_claims_info_{{$v->id}}" class="btn btn-danger btn-sm" 
                             onClick="showMyModal({{ $v->id }})">
                             <i class="fa fa-money" aria-hidden="true"></i> Add Claims Info 
                           </a>
                         @endif
+                      @endif
                     </td>
 
                     <?php 

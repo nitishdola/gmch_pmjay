@@ -18,6 +18,7 @@ Route::get('/get-beneficiary-details', 'REST\ApiController@getBeneficiaryDetails
 Route::get('/get-test-details', 'REST\ApiController@labTestDetails')->name('api.test_details');
 Route::get('/get-package-details', 'REST\ApiController@pmjayPackageDetails')->name('api.pmjay.package_details');
 
+Route::get('/get-remaining-amount', 'REST\ApiController@getBalance')->name('api.pmjay.get_balance');
 
 Route::get('/upload-data', 'Upload\UploadsController@uploadData')->name('updata');
 Route::post('/save-data', 'Upload\UploadsController@saveData')->name('savedata');

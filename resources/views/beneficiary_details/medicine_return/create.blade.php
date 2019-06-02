@@ -21,8 +21,8 @@
                           ?>
                           <div class="col-md-4">
                             <div class="form-group {{ $errors->has('medical_type') ? 'has-error' : ''}}">
-                            {!! Form::label('medical_type', '', array('class' => '')) !!}
-                                {!! Form::select('medical_type', $medical_types, null, ['class' => 'form-control', 'id' => 'medical_type', 'placeholder' => 'Select Medical type']) !!}
+                            {!! Form::label('medical_type*', '', array('class' => '')) !!}
+                                  {!! Form::select('medical_type', $medical_types, null, ['class' => 'form-control', 'id' => 'medical_type', 'placeholder' => 'Select Medical type', 'required' => true]) !!}
                               {!! $errors->first('medical_type', '<span class="help-inline">:message</span>') !!}
                             </div>
                           </div>
@@ -49,7 +49,7 @@
                                  <label for="name_of_patient">Beneficiary Name</label><input class="form-control" id="name_of_patient" name="name_of_patient" type="text" disabled>
                               </div>
                               <div class="form-group">
-                                 <label for="amount">Return Amount*</label><input class="form-control" required="true" id="amount" name="amount" type="text">
+                                <label for="amount">Amount*</label><input class="form-control" required="true" min="1" step="0.01" id="amount" name="amount" type="number">
                               </div>
                            </div>
 
@@ -78,41 +78,4 @@
 </div>
 @stop
 
-@section('pageJs')
-<script>
-$('#beneficiary_detail_id').change(function() {
-  $beneficiary_detail_id = $(this).val();
-  
-  if($beneficiary_detail_id != '') {
-    $.blockUI();
-    url = data = '';
-
-    url   = "{{ route('api.beneficiary_details') }}";
-    data  = "&beneficiary_id="+$beneficiary_detail_id;
-
-    $.ajax({
-      data : data,
-      url  : url,
-
-      error : function(resp) {
-        $.unblockUI();
-        alert('Oops !');
-      },
-
-      success : function(resp) {
-
-        $.unblockUI();
-        $('#name_of_patient').val(resp.name_of_patient);
-        $('#date_of_admission').val(resp.date_of_admission);
-      }
-    });
-
-  }else{
-    $.unblockUI();
-    $('#name_of_patient').val('');
-    $('#date_of_admission').val('');
-  }
-});
-
-</script>
-@stop
+@include('beneficiary_details._search_beneficiary_page_js')

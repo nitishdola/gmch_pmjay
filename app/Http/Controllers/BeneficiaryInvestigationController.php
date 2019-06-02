@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon;
+use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon, Helper;
 use App\Models\BeneficiaryDetail;
 use App\Models\BeneficiaryInvestigation;
 use App\Models\Master\LabTest;
@@ -19,39 +19,44 @@ class BeneficiaryInvestigationController extends Controller
     }
 
     public function save(Request $request) {
-    	$data = [];
 
-    	$data['beneficiary_detail_id'] 	= $request->beneficiary_detail_id;
-    	$data['lab_test_id'] 			= $request->lab_test_id;
+    	if(Helper::checkIfAllowed($request->beneficiary_detail_id)) {
+	    	$data = [];
 
-    	$data['amount'] 				= $request->amount;
-    	$data['test_date'] 				= date('Y-m-d', strtotime($request->test_date));
-    	$data['added_by']				= Auth::user()->id;
-    	
-    	$validator = Validator::make($data, BeneficiaryInvestigation::$rules);
-		    		if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
-		//DB::begintransaction();
+	    	$data['beneficiary_detail_id'] 	= $request->beneficiary_detail_id;
+	    	$data['lab_test_id'] 			= $request->lab_test_id;
 
-		$beneficiary = BeneficiaryInvestigation::create($data);
+	    	$data['amount'] 				= $request->amount;
+	    	$data['test_date'] 				= date('Y-m-d', strtotime($request->test_date));
+	    	$data['added_by']				= Auth::user()->id;
+	    	
+	    	$validator = Validator::make($data, BeneficiaryInvestigation::$rules);
+			    		if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
+			//DB::begintransaction();
 
-		if($beneficiary) {
-			//add to total expenditure
-			$beneficiary_details = BeneficiaryDetail::find($request->beneficiary_detail_id);
-			$old_expenditure = $beneficiary_details->total_expenditure;
-			$new_expenditure = $old_expenditure+$request->amount;
+			$beneficiary = BeneficiaryInvestigation::create($data);
 
-			$old_remaining = $beneficiary_details->remaining_amount;
-			$new_remaining = $old_remaining-$request->amount;
+			if($beneficiary) {
+				//add to total expenditure
+				$beneficiary_details = BeneficiaryDetail::find($request->beneficiary_detail_id);
+				$old_expenditure = $beneficiary_details->total_expenditure;
+				$new_expenditure = $old_expenditure+$request->amount;
 
-			$beneficiary_details->total_expenditure = $new_expenditure;
-			$beneficiary_details->remaining_amount = $new_remaining;
+				$old_remaining = $beneficiary_details->remaining_amount;
+				$new_remaining = $old_remaining-$request->amount;
 
-			$beneficiary_details->save();
+				$beneficiary_details->total_expenditure = $new_expenditure;
+				$beneficiary_details->remaining_amount = $new_remaining;
 
-			return Redirect::route('beneficary_details.view_beneficiary', $request->beneficiary_detail_id)->with(['message' => 'Investigation added successfully !', 'alert-class' => 'alert-success']);
+				$beneficiary_details->save();
+
+				return Redirect::route('beneficary_details.view_beneficiary', $request->beneficiary_detail_id)->with(['message' => 'Investigation added successfully !', 'alert-class' => 'alert-success']);
+			}else{
+				return Redirect::back()->with(['message' => 'Investigation could not update !', 'alert-class' => 'alert-danger']);
+			}
 		}else{
-			return Redirect::back()->with(['message' => 'Investigation could not update !', 'alert-class' => 'alert-danger']);
-		}
+            return Redirect::back()->with(['message' => 'Investigation not allowed since TA bill date is more than 15 Days !', 'alert-class' => 'alert-danger']);
+        }
 
 		//DB::commit();
 

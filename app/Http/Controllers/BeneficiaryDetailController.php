@@ -83,6 +83,10 @@ class BeneficiaryDetailController extends Controller
 
         if($request->beneficiary_ta_cost) {
             $beneficary_details->beneficiary_ta_cost = $request->beneficiary_ta_cost;
+
+            if($request->beneficiary_ta_cost > 0) {
+                $beneficary_details->beneficiary_ta_date = date('Y-m-d');
+            }
         }
 
         $beneficary_details->save();

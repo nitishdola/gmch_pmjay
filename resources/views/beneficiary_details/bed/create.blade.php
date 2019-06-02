@@ -8,8 +8,20 @@
          <div class="widget-container fluid-height clearfix">
             <div class="heading">
                <i class="fa fa-table"></i>PMJAY Beneficiaries Bed Charge
+
             </div>
+            
+
             <div class="widget-content padded clearfix">
+              <p class="black-text" id="remb"> Remaining Balance :
+                <span id="remaining_balance">0</span>
+              </p>
+
+              <div class="alert alert-danger" id="alert" style="display: none;">
+                Remaining amount crossed 50% of package amount !
+              </div>
+
+
                <div class="widget-content padded">
                   {!! Form::open(array('route' => 'beneficary_details.bed_charge.save', 'id' => 'beneficary_details.bed_charge.save')) !!}
                      <fieldset>
@@ -38,9 +50,6 @@
                            </div>
 
                             <div class="col-md-4">
-
-                              
-
                               <div class="form-group">
                                  <label for="lastname">Date of Admission</label><input class="form-control" disabled id="date_of_admission" name="date_of_admission" type="text">
                               </div>
@@ -62,41 +71,4 @@
 </div>
 @stop
 
-@section('pageJs')
-<script>
-$('#beneficiary_detail_id').change(function() {
-  $beneficiary_detail_id = $(this).val();
-  
-  if($beneficiary_detail_id != '') {
-    $.blockUI();
-    url = data = '';
-
-    url   = "{{ route('api.beneficiary_details') }}";
-    data  = "&beneficiary_id="+$beneficiary_detail_id;
-
-    $.ajax({
-      data : data,
-      url  : url,
-
-      error : function(resp) {
-        $.unblockUI();
-        alert('Oops !');
-      },
-
-      success : function(resp) {
-
-        $.unblockUI();
-        $('#name_of_patient').val(resp.name_of_patient);
-        $('#date_of_admission').val(resp.date_of_admission);
-      }
-    });
-
-  }else{
-    $.unblockUI();
-    $('#name_of_patient').val('');
-    $('#date_of_admission').val('');
-  }
-});
-
-</script>
-@stop
+@include('beneficiary_details._search_beneficiary_page_js')

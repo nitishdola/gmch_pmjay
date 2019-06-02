@@ -75,41 +75,4 @@
 </div>
 @stop
 
-@section('pageJs')
-<script>
-$('#beneficiary_detail_id').change(function() {
-  $beneficiary_detail_id = $(this).val();
-  
-  if($beneficiary_detail_id != '') {
-    $.blockUI();
-    url = data = '';
-
-    url   = "{{ route('api.beneficiary_details') }}";
-    data  = "&beneficiary_id="+$beneficiary_detail_id;
-
-    $.ajax({
-      data : data,
-      url  : url,
-
-      error : function(resp) {
-        $.unblockUI();
-        alert('Oops !');
-      },
-
-      success : function(resp) {
-
-        $.unblockUI();
-        $('#name_of_patient').val(resp.name_of_patient);
-        $('#date_of_admission').val(resp.date_of_admission);
-      }
-    });
-
-  }else{
-    $.unblockUI();
-    $('#name_of_patient').val('');
-    $('#date_of_admission').val('');
-  }
-});
-
-</script>
-@stop
+@include('beneficiary_details._search_beneficiary_page_js')
