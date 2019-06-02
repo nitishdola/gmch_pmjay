@@ -11,7 +11,7 @@
             </div>
             <div class="widget-content padded clearfix">
                <div class="widget-content padded">
-                  <form action="" id="validate-form" method="get">
+                  {!! Form::open(array('route' => 'beneficary_details.pet_ct.save', 'id' => 'beneficary_details.pet_ct.save')) !!}
                      <fieldset>
                         <div class="row">
                            <div class="col-md-4">
@@ -24,7 +24,7 @@
 
                               <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
                               {!! Form::label('PET_CT*', '', array('class' => '')) !!}
-                                  {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'required' => true, 'placeholder' => 'Endorscopy Name', 'autocomplete' => 'off']) !!}
+                                  {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'required' => true, 'placeholder' => 'PET CT Name', 'autocomplete' => 'off']) !!}
                                 {!! $errors->first('name', '<span class="help-inline">:message</span>') !!}
                               </div>
                            </div>

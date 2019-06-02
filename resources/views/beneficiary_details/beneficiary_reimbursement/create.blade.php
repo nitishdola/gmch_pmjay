@@ -11,7 +11,7 @@
             </div>
             <div class="widget-content padded clearfix">
                <div class="widget-content padded">
-                  <form action="" id="validate-form" method="get">
+                  {!! Form::open(array('route' => 'beneficary_details.reimbursement.beneficiary.save', 'id' => 'beneficary_details.reimbursement.beneficiary.save')) !!}
                      <fieldset>
                         <div class="row">
                            <div class="col-md-4">

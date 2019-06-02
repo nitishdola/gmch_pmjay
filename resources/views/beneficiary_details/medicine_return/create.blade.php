@@ -11,8 +11,24 @@
             </div>
             <div class="widget-content padded clearfix">
                <div class="widget-content padded">
-                  <form action="" id="validate-form" method="get">
+                  {!! Form::open(array('route' => 'beneficary_details.medicine_return.save', 'id' => 'beneficary_details.medicine_return.save')) !!}
                      <fieldset>
+
+                        <div class="row">
+                          <?php 
+                            $medical_types['Amrit Pharmacy'] = 'Amrit Pharmacy';
+                            $medical_types['Others'] = 'Others';
+                          ?>
+                          <div class="col-md-4">
+                            <div class="form-group {{ $errors->has('medical_type') ? 'has-error' : ''}}">
+                            {!! Form::label('medical_type', '', array('class' => '')) !!}
+                                {!! Form::select('medical_type', $medical_types, null, ['class' => 'form-control', 'id' => 'medical_type', 'placeholder' => 'Select Medical type']) !!}
+                              {!! $errors->first('medical_type', '<span class="help-inline">:message</span>') !!}
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                          
                         <div class="row">
                            <div class="col-md-4">
 

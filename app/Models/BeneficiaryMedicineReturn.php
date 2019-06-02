@@ -11,6 +11,8 @@ class BeneficiaryMedicineReturn extends Model
     	'beneficiary_detail_id',
     	'amount',
     	'bill_date',
+        'added_by',
+        'medical_type',
     );
     protected $guarded   = ['_token'];
 
@@ -18,5 +20,7 @@ class BeneficiaryMedicineReturn extends Model
     	'beneficiary_detail_id' => 'required|exists:beneficiary_details,id',
     	'amount' 				=> 'required',
     	'bill_date' 			=> 'required|date|date_format:Y-m-d',
+        'added_by'              => 'required|exists:users,id',
+        'medical_type'          => 'required',
 	];
 }

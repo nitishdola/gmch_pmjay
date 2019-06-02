@@ -65,4 +65,31 @@ class BeneficiaryDetailController extends Controller
         $beneficiary_details = BeneficiaryDetail::find($id);
         return view('beneficiary_details.view', compact('beneficiary_details'));
     }
+
+
+    public function createDischargeInfo() {
+        $all_beneficiaries  = BeneficiaryDetail::pluck('inward_number', 'id');
+        return view('beneficiary_details.discharge_info_create', compact('all_beneficiaries'));
+    }
+
+    public function saveDischargeInfo(Request $request) {
+        $beneficiary_detail_id = $request->beneficiary_detail_id;
+        $beneficary_details = BeneficiaryDetail::find($beneficiary_detail_id);
+
+        if($request->discharge_date) {
+            $beneficary_details->discharge_date = date('Y-m-d', strtotime($request->discharge_date));
+        }
+
+
+        if($request->beneficiary_ta_cost) {
+            $beneficary_details->beneficiary_ta_cost = $request->beneficiary_ta_cost;
+        }
+
+        $beneficary_details->save();
+
+        return Redirect::route('beneficary_details.view_beneficiary', $beneficiary_detail_id)->with(['message' => 'Updated successfully', 'alert-class' => 'alert-success']);
+        
+    }
+
+    
 }

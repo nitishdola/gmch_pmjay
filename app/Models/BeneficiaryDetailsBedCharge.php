@@ -11,6 +11,7 @@ class BeneficiaryDetailsBedCharge extends Model
     	'beneficiary_detail_id',
     	'amount',
     	'date',
+        'added_by',
     );
     protected $guarded   = ['_token'];
 
@@ -19,5 +20,6 @@ class BeneficiaryDetailsBedCharge extends Model
     	'beneficiary_detail_id' => 'required|exists:beneficiary_details,id',
     	'amount' 				=> 'required|numeric',
     	'date' 					=> 'required|date|date_format:Y-m-d',
+        'added_by'              => 'required|exists:users,id',
 	];
 }

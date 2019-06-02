@@ -205,7 +205,7 @@ $hospital_cost = 0;
                 <td> 
                   <?php 
 
-                    $pet_cet_cost = Helper::getOTCost($beneficiary_details->id);
+                    $pet_cet_cost = Helper::getPetCetCost($beneficiary_details->id);
 
                     $hospital_cost += $pet_cet_cost;
                   ?>

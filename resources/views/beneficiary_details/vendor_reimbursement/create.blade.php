@@ -7,11 +7,11 @@
       <div class="col-lg-12">
          <div class="widget-container fluid-height clearfix">
             <div class="heading">
-               <i class="fa fa-table"></i>PMJAY Beneficiary Payment/Reimbursement Add
+               <i class="fa fa-table"></i>PMJAY Vendor Payment/Reimbursement Add
             </div>
             <div class="widget-content padded clearfix">
                <div class="widget-content padded">
-                  <form action="" id="validate-form" method="get">
+                  {!! Form::open(array('route' => 'beneficary_details.reimbursement.vendor.save', 'id' => 'beneficary_details.reimbursement.vendor.save')) !!}
                      <fieldset>
                         <div class="row">
                            <div class="col-md-4">
@@ -37,7 +37,7 @@
                            <div class="col-md-4">
 
 
-                              <div class="form-group">
+                              <div class="form-group ">
                                  <label for="name_of_patient">Beneficiary Name</label><input class="form-control" id="name_of_patient" name="name_of_patient" type="text" disabled>
                               </div>
 
@@ -57,7 +57,7 @@
                               <div class="form-group">
                                  <label for="lastname">Date of Admission</label><input class="form-control" disabled id="date_of_admission" name="date_of_admission" type="text">
                               </div>
-                              <div class="form-group">
+                              <div class="form-group {{ $errors->has('date') ? 'has-error' : ''}}">
                                  <label for="date">Date*</label><input class="form-control zdatepicker" id="date" name="date" required="true" type="text">
                               </div>
                            </div>

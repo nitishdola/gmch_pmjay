@@ -11,7 +11,7 @@
             </div>
             <div class="widget-content padded clearfix">
                <div class="widget-content padded">
-                  <form action="" id="validate-form" method="get">
+                  {!! Form::open(array('route' => 'beneficary_details.icu.save', 'id' => 'beneficary_details.icu.save')) !!}
                      <fieldset>
                         <div class="row">
                            <div class="col-md-4">
@@ -33,7 +33,7 @@
                                  <label for="name_of_patient">Beneficiary Name</label><input class="form-control" id="name_of_patient" name="name_of_patient" type="text" disabled>
                               </div>
                               <div class="form-group">
-                                 <label for="amount">Bill Amount*</label><input class="form-control" required="true" id="amount" name="amount" type="text">
+                                 <label for="amount">Amount*</label><input class="form-control" required="true" id="amount" name="amount" type="text">
                               </div>
                            </div>
 

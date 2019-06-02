@@ -84,6 +84,12 @@ Route::group(['prefix' => 'beneficary-details'], function () {
       Route::post('/save', 'BeneficiaryDetailPetCtController@save')->name('beneficary_details.pet_ct.save');
     });
 
+
+    Route::group(['prefix' => 'discharge-info'], function () {
+      Route::get('/add', 'BeneficiaryDetailController@createDischargeInfo')->name('beneficary_details.discharge_info.create');
+      Route::post('/save', 'BeneficiaryDetailController@saveDischargeInfo')->name('beneficary_details.discharge_info.save');
+    });
+
   });
 
 
@@ -110,4 +116,9 @@ Route::group(['prefix' => 'beneficary-details'], function () {
 
   });
 
+});
+
+
+Route::group(['prefix' => 'rest'], function () {
+  Route::get('/add-claims-info', 'REST\ApiController@addClaimsInfo')->name('rest.add_claims_info');
 });

@@ -26,7 +26,8 @@ class BeneficiaryInvestigationController extends Controller
 
     	$data['amount'] 				= $request->amount;
     	$data['test_date'] 				= date('Y-m-d', strtotime($request->test_date));
-
+    	$data['added_by']				= Auth::user()->id;
+    	
     	$validator = Validator::make($data, BeneficiaryInvestigation::$rules);
 		    		if ($validator->fails()) return Redirect::back()->withErrors($validator)->withInput();
 		//DB::begintransaction();

@@ -11,9 +11,23 @@
             </div>
             <div class="widget-content padded clearfix">
                <div class="widget-content padded">
-                  <form action="" id="validate-form" method="get">
+                  {!! Form::open(array('route' => 'beneficary_details.medicine.save', 'id' => 'beneficary_details.medicine.save')) !!}
                      <fieldset>
                         <div class="row">
+                            <?php 
+                              $medical_types['Amrit Pharmacy'] = 'Amrit Pharmacy';
+                              $medical_types['Others'] = 'Others';
+                            ?>
+                            <div class="col-md-4">
+                              <div class="form-group {{ $errors->has('medical_type') ? 'has-error' : ''}}">
+                              {!! Form::label('medical_type', '', array('class' => '')) !!}
+                                  {!! Form::select('medical_type', $medical_types, null, ['class' => 'form-control', 'id' => 'medical_type', 'placeholder' => 'Select Medical type']) !!}
+                                {!! $errors->first('medical_type', '<span class="help-inline">:message</span>') !!}
+                              </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
                            <div class="col-md-4">
 
                               <div class="form-group {{ $errors->has('beneficiary_detail_id') ? 'has-error' : ''}}">
@@ -24,7 +38,7 @@
 
                               <div class="form-group {{ $errors->has('invoice_number') ? 'has-error' : ''}}">
                               {!! Form::label('invoice_number', '', array('class' => '')) !!}
-                                  {!! Form::text('invoice_number', null, ['class' => 'form-control', 'id' => 'invoice_number', 'placeholder' => 'Invoice Number', 'autocomplete' => 'off']) !!}
+                                  {!! Form::text('invoice_number', null, ['class' => 'form-control', 'id' => 'invoice_number', 'placeholder' => 'Invoice Number', 'autocomplete' => 'off', 'required' => 'true']) !!}
                                 {!! $errors->first('invoice_number', '<span class="help-inline">:message</span>') !!}
                               </div>
                            </div>
@@ -38,9 +52,6 @@
                            </div>
 
                             <div class="col-md-4">
-
-                              
-
                               <div class="form-group">
                                  <label for="lastname">Date of Admission</label><input class="form-control" disabled id="date_of_admission" name="date_of_admission" type="text">
                               </div>
@@ -49,7 +60,7 @@
                               </div>
                            </div>
                         </div>
-                        </div>
+                      </div>
 
                         <button class="btn btn-primary" type="submit"><i class="fa fa-download" aria-hidden="true"></i> SUBMIT </button>
                      </fieldset>

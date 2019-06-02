@@ -228,7 +228,7 @@ class Helper
 		$petcet_costs = DB::table('beneficiary_detail_pet_cts')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_petcet_cost = 0;
-
+//dd($petcet_costs);
         foreach($petcet_costs as $ik => $iv) {
           $new_petcet_cost += $iv->amount;
         }

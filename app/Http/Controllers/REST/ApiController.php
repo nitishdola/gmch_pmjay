@@ -28,4 +28,18 @@ class ApiController extends Controller
     	$package_id = $request->package_id;
     	return PmjayPackage::find($package_id);
     }
+ 
+    public function addClaimsInfo(Request $request) { //dd($request->cliams_received);
+        $beneficiary_details = BeneficiaryDetail::find($request->beneficiary_details_id);
+
+        $beneficiary_details->cliams_received = $request->cliams_received;
+        $beneficiary_details->deducted_by_sha = $request->deducted_by_sha;
+
+        if($beneficiary_details->save()) {
+            return 1;
+        }else{
+            return 0;
+        }
+        
+    }
 }

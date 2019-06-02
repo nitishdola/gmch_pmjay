@@ -45,7 +45,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('beneficary_details.reimbursement.beneficiary.create') }}">Add <strong>Discharge and TA</strong></a>
+                            <a href="{{ route('beneficary_details.discharge_info.create') }}">Add <strong>Discharge and TA</strong></a>
                         </li>
 
                         <li>
@@ -92,9 +92,9 @@
                         </li>
 
 
-                        <li>
+                        <!-- <li>
                             <a href="{{ route('beneficary_details.blood_test.create') }}">Add Beneficiary Blood Test</a>
-                        </li>
+                        </li> -->
 
 
                         <li>
@@ -111,9 +111,9 @@
                             <a href="{{ route('beneficary_details.dialysis.create') }}">Add Beneficiary Dialysis Charge</a>
                         </li>
 
-                        <li>
+                        <!-- <li>
                             <a href="{{ route('beneficary_details.endorscopy.create') }}">Add Beneficiary Endorscopy Charge</a>
-                        </li>
+                        </li> -->
 
                         <li>
                             <a href="{{ route('beneficary_details.pet_ct.create') }}">Add PET-CT Charge</a>

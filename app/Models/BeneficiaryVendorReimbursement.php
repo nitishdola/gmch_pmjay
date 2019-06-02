@@ -12,6 +12,7 @@ class BeneficiaryVendorReimbursement extends Model
     	'beneficiary_detail_id',
     	'amount',
     	'date',
+        'added_by',
     );
     protected $guarded   = ['_token'];
 
@@ -21,5 +22,6 @@ class BeneficiaryVendorReimbursement extends Model
     	'beneficiary_detail_id' => 'required|exists:beneficiary_details,id',
     	'amount' 				=> 'required',
     	'date' 					=> 'required|date|date_format:Y-m-d',
+        'added_by'              => 'required|exists:users,id',
 	];
 }

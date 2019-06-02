@@ -11,6 +11,7 @@ class BeneficiarySrl extends Model
     	'beneficiary_detail_id',
     	'amount',
     	'test_date',
+        'added_by',
     );
     protected $guarded   = ['_token'];
 
@@ -19,5 +20,6 @@ class BeneficiarySrl extends Model
     	'test_name' 			=> 'required',
     	'amount' 				=> 'required',
     	'test_date' 			=> 'required|date|date_format:Y-m-d',
+        'added_by'              => 'required|exists:users,id',
 	];
 }
