@@ -10,6 +10,13 @@
                <i class="fa fa-table"></i>PMJAY Beneficiaries /  Add Investigations
             </div>
             <div class="widget-content padded clearfix">
+              <p class="black-text" id="remb"> Remaining Balance :
+                <span id="remaining_balance">0</span>
+              </p>
+
+              <div class="alert alert-danger" id="alert" style="display: none;">
+                Remaining amount crossed 50% of package amount !
+              </div>
                <div class="widget-content padded">
 
                     {!! Form::open(array('route' => 'beneficary_details.investigation.save', 'id' => 'beneficary_details.investigation.save')) !!}
@@ -129,6 +136,59 @@ $('#lab_test_id').change(function() {
   }else{
     $('#amount').val('');
   }
+});
+
+$('#amount').keyup(function() {
+  $amount = $(this).val();
+  
+  $beneficiary_details_id = $('#beneficiary_detail_id').val();
+
+  if($beneficiary_details_id != '') {
+    data = url = '';
+
+    url += "{{ route('api.pmjay.get_balance') }}";
+    data += '&beneficiary_details_id='+$beneficiary_details_id+'&amount='+$amount;
+
+    //console.log(url+data);
+
+    $.ajax({
+      data : data,
+      url : url,
+      type : 'GET',
+      dataType : 'JSON',
+
+      error : function(resp) {
+        //console.log(resp);
+        alert('Please try again');
+      },
+
+      success  : function(resp) {
+        //console.log(resp);
+        $package_amount = resp.package_amount;
+        $total_cost     = resp.total_cost;
+        $remaining_balance     = resp.remaining_balance;
+
+        $perc = ($total_cost/$package_amount)*100;
+        if($perc > 50) {
+          $('#alert').fadeIn('slow');
+        }else{
+          $('#alert').hide();
+        }
+        if($perc > 70) {
+          $('#remb').removeClass('black-text');
+          $('#remb').addClass('red-text');
+        }else{
+          $('#remb').addClass('black-text');
+          $('#remb').removeClass('red-text');
+        }
+
+        $('#remaining_balance').text(resp.remaining_balance);
+      }
+    });
+  }else{
+    alert('select beneficiary !');
+  }
+
 });
 </script>
 @stop

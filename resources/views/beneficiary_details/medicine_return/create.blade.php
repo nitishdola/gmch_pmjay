@@ -10,6 +10,7 @@
                <i class="fa fa-table"></i>PMJAY Beneficiaries Medicine Return Bill Add
             </div>
             <div class="widget-content padded clearfix">
+              
                <div class="widget-content padded">
                   {!! Form::open(array('route' => 'beneficary_details.medicine_return.save', 'id' => 'beneficary_details.medicine_return.save')) !!}
                      <fieldset>

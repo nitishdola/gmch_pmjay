@@ -33,6 +33,11 @@ class ApiController extends Controller
         $beneficiary_details = BeneficiaryDetail::find($request->beneficiary_details_id);
 
         $beneficiary_details->cliams_received = $request->cliams_received;
+
+        if($request->cliams_received > 0) {
+            $beneficiary_details->cliams_receive_date = date('Y-m-d', strtotime($request->cliams_receive_date));
+        }
+
         $beneficiary_details->deducted_by_sha = $request->deducted_by_sha;
 
         if($beneficiary_details->save()) {

@@ -1,5 +1,12 @@
 @extends('layouts.default')
 
+@section('pageCss')
+<style>
+.Zebra_DatePicker_Icon_Wrapper {
+  width: 200px !important;
+}
+</style>
+
 @section('content')
 
 <div class="row">
@@ -149,6 +156,10 @@
               {!! $errors->first('cliams_received', '<span class="help-inline">:message</span>') !!}
               </div>
 
+              <div class="form-group">
+                <label for="cliams_receive_date">Receive Date</label><input class="form-control zdatepicker" id="cliams_receive_date" required="required" name="cliams_receive_date" type="text">
+              </div>
+
               <div class="form-group {{ $errors->has('deducted_by_sha') ? 'has-error' : ''}}">
               {!! Form::label('deducted_by_sha*', '', array('class' => '')) !!}
               {!! Form::number('deducted_by_sha', null, ['class' => 'form-control', 'id' => 'deducted_by_sha', 'placeholder' => 'Deduction', 'autocomplete' => 'off']) !!}
@@ -177,6 +188,7 @@
     showMyModal = function(beneficiary_details_id) {
 
       $('#cliams_received').val('');
+      $('#cliams_receive_date').val('');
       $('#deducted_by_sha').val('');
 
       $name = $('#name_'+beneficiary_details_id).text();
@@ -193,6 +205,7 @@
       beneficiary_details_id = $('#beneficiary_details_id').val(); console.log(beneficiary_details_id);
       $cliams_received = $('#cliams_received').val();
       $deducted_by_sha = $('#deducted_by_sha').val();
+      $cliams_receive_date = $('#cliams_receive_date').val();
       if($cliams_received == '') {
         alert('Claims receive is empty !');
         return false;
@@ -205,7 +218,7 @@
 
       data = url = '';
 
-      data += '&cliams_received='+$cliams_received+'&deducted_by_sha='+$deducted_by_sha+'&beneficiary_details_id='+beneficiary_details_id;
+      data += '&cliams_received='+$cliams_received+'&deducted_by_sha='+$deducted_by_sha+'&beneficiary_details_id='+beneficiary_details_id+'&cliams_receive_date='+$cliams_receive_date;
 
       url += "{{ route('rest.add_claims_info') }}";
 

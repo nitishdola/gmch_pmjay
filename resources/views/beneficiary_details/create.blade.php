@@ -11,6 +11,8 @@
       @if ($errors->any())
         {{ implode('', $errors->all('<div>:message</div>')) }}
       @endif
+
+      
       <div class="widget-content padded">
         {!! Form::open(array('route' => 'beneficary_details.save', 'class' => 'form-horizontal')) !!}
           @include('beneficiary_details._beneficiary_details_create_form')

@@ -10,6 +10,13 @@
                <i class="fa fa-table"></i>PMJAY Beneficiaries Medicine Bill Add
             </div>
             <div class="widget-content padded clearfix">
+              <p class="black-text" id="remb"> Remaining Balance :
+                <span id="remaining_balance">0</span>
+              </p>
+
+              <div class="alert alert-danger" id="alert" style="display: none;">
+                Remaining amount crossed 50% of package amount !
+              </div>
                <div class="widget-content padded">
                   {!! Form::open(array('route' => 'beneficary_details.medicine.save', 'id' => 'beneficary_details.medicine.save')) !!}
                      <fieldset>
