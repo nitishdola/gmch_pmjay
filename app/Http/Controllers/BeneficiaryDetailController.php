@@ -62,7 +62,7 @@ class BeneficiaryDetailController extends Controller
     }
 
     public function viewBeneficiary($id) {
-        $beneficiary_details = BeneficiaryDetail::find($id);
+        $beneficiary_details = BeneficiaryDetail::with('addedBy', 'cancelledBy')->whereId($id)->first();
         return view('beneficiary_details.view', compact('beneficiary_details'));
     }
 

@@ -1,15 +1,48 @@
 @extends('layouts.default')
 
+
+@section('pageCss')
+<style>
+#background{
+    position:absolute;
+    z-index:0;
+    display:block;
+    min-height:50%; 
+    min-width:50%;
+    color:yellow;
+}
+
+
+#bg-text
+{ 
+    padding-top: 200px;
+    padding-left: 200px;
+    color:#F68787;
+    font-size:120px;
+    transform:rotate(310deg);
+    -webkit-transform:rotate(350deg);
+}
+</style>
+@stop
+
 @section('content')
 
 <?php 
-
-$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details->id)->first();
 $hospital_cost = 0;
 ?>
+
+
+
 <div class="row">
   <div class="col-lg-12">
-    <div class="widget-container fluid-height">
+    <div class="widget-container fluid-height" style="z-index: 999">
+
+      @if($beneficiary_details->is_cancelled == 1)
+      <div id="background">
+        <p id="bg-text">CANCELLED</p>
+      </div>
+      @endif
+
       <div class="heading tabs">
         <i class="fa fa-user-circle" aria-hidden="true"></i>
         Name : {{ $beneficiary_details->name_of_patient }} 
@@ -19,6 +52,8 @@ $hospital_cost = 0;
 
         <i class="fa fa-info-circle" aria-hidden="true"></i>
         / INWARD NUMBER : {{ $beneficiary_details->inward_number }} 
+
+
         <ul class="nav nav-tabs pull-right" data-tabs="tabs" id="tabs">
           <li class="active">
             <a data-toggle="tab" href="#tab1"><i class="fa fa-comments"></i><span>Overview</span></a>
@@ -35,7 +70,7 @@ $hospital_cost = 0;
       <div class="tab-content padded" id="my-tab-content">
         <div class="tab-pane active" id="tab1">
           <h3>
-            Overview
+            Overview 
           </h3>
           <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -90,9 +125,25 @@ $hospital_cost = 0;
                 <th>MRD Number </th>
                 <td>{{ $beneficiary_details->mrd_number }}</td>
               </tr>
-              
-
             </thead>
+
+            @if($beneficiary_details->is_cancelled != 1)
+            <tfoot>
+              <tr>
+                <td>
+                  <a target="_blank" onclick="return confirm('Are you sure to cancel ?')" href="{{ route('beneficary_details.cancel.create', $beneficiary_details->id ) }}" class="btn btn-danger btn-lg"> <i class="fa fa-arrows-alt" aria-hidden="true"></i> CANCEL BENEFICIARY</a>
+                </td>
+              </tr>
+            </tfoot>
+            @else
+             <tfoot>
+              <tr>
+                <td>
+                  <button type="button" class="btn btn-danger btn-lg"> BENEFICIARY CANCELLED ON {{ date('d-m-Y', strtotime($beneficiary_details->cancellation_date)) }} BY {{ ucwords($beneficiary_details->cancelledBy->name ) }}</button>
+                </td>
+              </tr>
+            </tfoot>
+            @endif
           </table>
         </div>
         <div class="tab-pane" id="tab2">

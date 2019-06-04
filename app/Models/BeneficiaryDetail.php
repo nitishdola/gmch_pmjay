@@ -43,6 +43,16 @@ class BeneficiaryDetail extends Model
         return $this->hasOne('App\OldData\BeneficiaryDetailOldData');
     }
 
+    public function addedBy()
+    {
+        return $this->belongsTo('App\User', 'added_by');
+    }
+
+    public function cancelledBy()
+    {
+        return $this->belongsTo('App\User', 'cancelled_by');
+    }
+
     public function pmjay_package()
     {
         return $this->belongsTo('App\Master\PmjayPackage');

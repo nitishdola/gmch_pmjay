@@ -60,4 +60,9 @@ class LoginController extends Controller
                     'username' => 'Invalid username/password',
                 ]);
     }
+
+    public function logout(Request $request) {
+      Auth::logout();
+      return redirect('/login');
+    }
 }

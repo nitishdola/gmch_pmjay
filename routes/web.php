@@ -33,6 +33,11 @@ Route::group(['prefix' => 'beneficary-details'], function () {
   Route::get('/create', 'BeneficiaryDetailController@create')->name('beneficary_details.create');
   Route::post('/save', 'BeneficiaryDetailController@save')->name('beneficary_details.save');
 
+  Route::group(['prefix' => 'cancel'], function () {
+    Route::get('/{num}', 'BeneficiaryCancelController@create')->name('beneficary_details.cancel.create');
+    Route::post('/save', 'BeneficiaryCancelController@save')->name('beneficary_details.cancel.save');
+  });
+
   Route::group(['prefix' => 'investigation'], function () {
   	Route::get('/add', 'BeneficiaryInvestigationController@create')->name('beneficary_details.investigation.create');
   	Route::post('/save', 'BeneficiaryInvestigationController@save')->name('beneficary_details.investigation.save');
@@ -119,6 +124,8 @@ Route::group(['prefix' => 'beneficary-details'], function () {
 
 });
 
+
+Route::get('/logout', 'Auth\LoginController@logOut')->name('logout');
 
 Route::group(['prefix' => 'rest'], function () {
   Route::get('/add-claims-info', 'REST\ApiController@addClaimsInfo')->name('rest.add_claims_info');

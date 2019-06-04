@@ -17,7 +17,7 @@
                                 <i class="fa fa-gear"></i>Account Settings</a>
                         </li>
                         <li>
-                            <a href="{{ url('logout') }}">
+                            <a href="{{ route('logout') }}">
                                 <i class="fa fa-sign-out"></i>Logout</a>
                         </li>
                     </ul>
