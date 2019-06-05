@@ -124,9 +124,19 @@ Route::group(['prefix' => 'beneficary-details'], function () {
 
 });
 
+Route::group(['prefix' => 'reports'], function () {
+  Route::group(['prefix' => 'pmjay'], function () {
+    Route::get('/not-discharged-reports', 'Reports\PmjayReportsController@beneficiaryDischargeReport')->name('reports.pmjay.beneficiary_discharge_report');
+  });
+});
 
 Route::get('/logout', 'Auth\LoginController@logOut')->name('logout');
 
 Route::group(['prefix' => 'rest'], function () {
   Route::get('/add-claims-info', 'REST\ApiController@addClaimsInfo')->name('rest.add_claims_info');
+});
+
+
+Route::group(['prefix' => 'cron'], function () {
+  Route::get('/', 'Cron\CronJobController@completeProcess')->name('cron.process_complete');
 });

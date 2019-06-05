@@ -18,9 +18,10 @@
     padding-top: 200px;
     padding-left: 200px;
     color:#F68787;
-    font-size:120px;
+    font-size:80px;
     transform:rotate(310deg);
     -webkit-transform:rotate(350deg);
+    font-family: Copperplate,"Copperplate Gothic Light",fantasy
 }
 </style>
 @stop

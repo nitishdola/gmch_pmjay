@@ -73,7 +73,9 @@ class Helper
 			$old_investigation_cost = $old_data->investigation_cost;
 		}
 
-		$investigations = DB::table('beneficiary_investigations')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$where = [];
+		$where['status'] = 1;
+		$investigations = DB::table('beneficiary_investigations')->where('beneficiary_detail_id', $beneficiary_details_id)->where($where)->get();
 
         $new_investigation_cost = 0;
 
@@ -88,6 +90,8 @@ class Helper
 
 
 	public static function getDialysisCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_dialysis_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_dialysis_cost = 0;
@@ -95,7 +99,7 @@ class Helper
 			$old_dialysis_cost = $old_data->dialysis_cost;
 		}
 
-		$dialysis = DB::table('beneficiary_detail_dialysis_charges')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$dialysis = DB::table('beneficiary_detail_dialysis_charges')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_dialysis_cost = 0;
 
@@ -110,6 +114,8 @@ class Helper
 
 
 	public static function getBloodTransfusionCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_blood_transfusion_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_blood_transfusion_cost = 0;
@@ -132,6 +138,8 @@ class Helper
 
 
 	public static function getEndorscopyCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_endorscopy_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_endorscopy_cost = 0;
@@ -153,6 +161,8 @@ class Helper
 	}
 
 	public static function getBedCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_bedcost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_bed_cost = 0;
@@ -160,7 +170,7 @@ class Helper
 			$old_bed_cost = $old_data->bed_cost;
 		}
 
-		$bed_costs = DB::table('beneficiary_details_bed_charges')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$bed_costs = DB::table('beneficiary_details_bed_charges')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_bed_cost = 0;
 
@@ -175,6 +185,8 @@ class Helper
 
 
 	public static function getIcuCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_icu_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_icu_cost = 0;
@@ -182,7 +194,7 @@ class Helper
 			$old_icu_cost = $old_data->icu_cost;
 		}
 
-		$icu_costs = DB::table('beneficiary_details_icu_charges')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$icu_costs = DB::table('beneficiary_details_icu_charges')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_icu_cost = 0;
 
@@ -196,6 +208,8 @@ class Helper
 	}
 
 	public static function getOTCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_ot_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_ot_cost = 0;
@@ -203,7 +217,7 @@ class Helper
 			$old_ot_cost = $old_data->ot_cost;
 		}
 
-		$ot_costs = DB::table('beneficiary_details_o_t_charges')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$ot_costs = DB::table('beneficiary_details_o_t_charges')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_ot_cost = 0;
 
@@ -218,6 +232,8 @@ class Helper
 
 
 	public static function getPetCetCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_petcet_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_petcet_cost = 0;
@@ -225,7 +241,7 @@ class Helper
 			$old_petcet_cost = $old_data->pet_cet_cost_cost;
 		}
 
-		$petcet_costs = DB::table('beneficiary_detail_pet_cts')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$petcet_costs = DB::table('beneficiary_detail_pet_cts')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_petcet_cost = 0;
 //dd($petcet_costs);
@@ -240,6 +256,8 @@ class Helper
 
 
 	public static function getVendorReimbursementCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_vr_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_vr_cost = 0;
@@ -247,7 +265,7 @@ class Helper
 			$old_vr_cost = $old_data->vendor_reimbursement_cost;
 		}
 
-		$vr_costs = DB::table('beneficiary_vendor_reimbursements')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$vr_costs = DB::table('beneficiary_vendor_reimbursements')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_vr_cost = 0;
 
@@ -261,6 +279,8 @@ class Helper
 	}
 
 	public static function getBeneficiaryReimbursementCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_br_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_br_cost = 0;
@@ -268,7 +288,7 @@ class Helper
 			$old_br_cost = $old_data->beneficiary_reimbursement_cost;
 		}
 
-		$vr_costs = DB::table('beneficiary_reimbursements')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$vr_costs = DB::table('beneficiary_reimbursements')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_br_cost = 0;
 
@@ -283,6 +303,8 @@ class Helper
 
 
 	public static function getMedicineCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_medicine_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_medicine_cost = 0;
@@ -290,7 +312,7 @@ class Helper
 			$old_medicine_cost = $old_data->miscellaneous_cost+$old_data->amrit_pharmacy_cost;
 		}
 
-		$medicine_costs = DB::table('beneficiary_medicines')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$medicine_costs = DB::table('beneficiary_medicines')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_medicine_cost = 0;
 
@@ -304,6 +326,8 @@ class Helper
 	} 
 
 	public static function getMedicineReturnCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_medicine_return_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_medicine_return_cost = 0;
@@ -311,7 +335,7 @@ class Helper
 			$old_medicine_return_cost = $old_data->medicine_return_cost;
 		}
 
-		$medicine_costs = DB::table('beneficiary_medicine_returns')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$medicine_costs = DB::table('beneficiary_medicine_returns')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_medicine_return_cost = 0;
 
@@ -326,6 +350,8 @@ class Helper
 
 
 	public static function getTACost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_ta_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_ta_cost = 0;
@@ -333,7 +359,7 @@ class Helper
 			$old_ta_cost = $old_data->beneficiary_ta_cost;
 		}
 
-		$new_ta_cost = DB::table('beneficiary_details')->where('id', $beneficiary_details_id)->first()->beneficiary_ta_cost;
+		$new_ta_cost = DB::table('beneficiary_details')->where($where)->where('id', $beneficiary_details_id)->first()->beneficiary_ta_cost;
 
         $total_ta_cost = $new_ta_cost+$old_ta_cost;
 
@@ -342,6 +368,8 @@ class Helper
 
 
 	public static function getSRLCost($beneficiary_details_id = null) {
+		$where = [];
+		$where['status'] = 1;
 		$total_srl_cost = 0;
 		$old_data = DB::table('beneficiary_detail_old_data')->where('beneficiary_detail_id', $beneficiary_details_id)->first();
 		$old_srl_cost = 0;
@@ -349,7 +377,7 @@ class Helper
 			$old_srl_cost = $old_data->srl_cost;
 		}
 
-		$srl_costs = DB::table('beneficiary_srls')->where('beneficiary_detail_id', $beneficiary_details_id)->get();
+		$srl_costs = DB::table('beneficiary_srls')->where($where)->where('beneficiary_detail_id', $beneficiary_details_id)->get();
 
         $new_srl_cost = 0;
 

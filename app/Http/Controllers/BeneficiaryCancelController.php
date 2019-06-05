@@ -15,9 +15,10 @@ class BeneficiaryCancelController extends Controller
     }
 
     public function save(Request $request) {
-    	//dd($request->all());
+    	//dd($request->all()['disable_lists']);
         $beneficiary_details_id = Crypt::decrypt($request->beneficiary_details_id);
-    	foreach($request->all() as $k => $v) {
+    	foreach($request->all()['disable_lists'] as $k => $v) {
+            //echo 'Cancelling '.$v;
     		if($v == 'investigation') {
                 DB::table('beneficiary_investigations')->where('beneficiary_detail_id', $beneficiary_details_id)->update(array('status' => 0));
     		}
@@ -42,9 +43,9 @@ class BeneficiaryCancelController extends Controller
     			DB::table('beneficiary_reimbursements')->where('beneficiary_detail_id', $beneficiary_details_id)->update(array('status' => 0));
     		}
 
-    		if($v == 'blood_transfusion') {
+    		/*if($v == 'blood_transfusion') {
     			DB::table('blood_transfusions')->where('beneficiary_detail_id', $beneficiary_details_id)->update(array('status' => 0));
-    		}
+    		}*/
 
     		if($v == 'ot') {
     			DB::table('beneficiary_details_o_t_charges')->where('beneficiary_detail_id', $beneficiary_details_id)->update(array('status' => 0));
@@ -55,7 +56,9 @@ class BeneficiaryCancelController extends Controller
     		}
 
     		if($v == 'bed_charge') {
-    			DB::table('beneficiary_details_bed_charges')->where('beneficiary_detail_id', $beneficiary_details_id)->update(array('status' => 0));
+    			$cancel_beds = DB::table('beneficiary_details_bed_charges')->where('beneficiary_detail_id', $beneficiary_details_id)->update(array('status' => 0));
+
+                //dump($cancel_beds);
     		}
 
     		if($v == 'dialysis') {
