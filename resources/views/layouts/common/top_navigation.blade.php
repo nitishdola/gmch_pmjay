@@ -55,6 +55,14 @@
                         <li>
                             <a href="{{ route('beneficary_details.create', ['hospital_type' => 'mmch']) }}">Add New MMCH Beneficiary</a>
                         </li>
+
+                        <li>
+                            <a href="{{ route('reports.pmjay.beneficiary_discharge_report') }}">Beneficiary not discharged for > 45 Days</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('reports.pmjay.not_paid_sha') }}">Claim not received after discharge from SHA > 30 Days</a>
+                        </li>
                     </ul>
                 </li>
 

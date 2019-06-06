@@ -127,6 +127,9 @@ Route::group(['prefix' => 'beneficary-details'], function () {
 Route::group(['prefix' => 'reports'], function () {
   Route::group(['prefix' => 'pmjay'], function () {
     Route::get('/not-discharged-reports', 'Reports\PmjayReportsController@beneficiaryDischargeReport')->name('reports.pmjay.beneficiary_discharge_report');
+
+    Route::get('/not-paid-reports', 'Reports\PmjayReportsController@beneficiaryClaimReportSha')->name('reports.pmjay.not_paid_sha');
+
   });
 });
 

@@ -444,7 +444,8 @@ body.login2 {
             padding: 10px 15px 9px;
             font-size: 12px;
             font-weight: 400;
-            color: #999999;
+            color: #3F0FF2;
+            font-weight: 600;
             -webkit-transition: all 0.3s;
             -moz-transition: all 0.3s;
             transition: all 0.3s; }
@@ -874,7 +875,8 @@ body.sidebar-nav {
     .dropdown-menu > li > a {
       padding: 9px 15px 9px 2px;
       border-bottom: 1px solid #e2e2e2;
-      color: #999999;
+      color: #000;
+      font-weight: 600;
       font-size: 12px;
       margin-left: 14px; }
       .dropdown-menu > li > a:hover, .dropdown-menu > li > a.current {
