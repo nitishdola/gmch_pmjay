@@ -10,7 +10,7 @@ use App\Models\BeneficiaryDetail;
 use App\Models\OldData\BeneficiaryDetailOldData;
 use App\Models\Master\LabTest;
 use App\Models\Master\PmjayPackage;
-
+use App\Models\Master\BloodTransfusion;
 class ApiController extends Controller
 {
     public function getBeneficiaryDetails(Request $request) {
@@ -78,5 +78,9 @@ class ApiController extends Controller
         $arr['remaining_balance']      = $package_amount - $total_cost;
 
         return json_encode($arr);
+    }
+
+    public function getBloodTransfusionRate(Request $request) {
+        return BloodTransfusion::find($request->blood_transfusion_id);
     }
 }

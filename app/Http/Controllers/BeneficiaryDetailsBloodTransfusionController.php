@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 
 use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon, Helper;
 use App\Models\BeneficiaryDetail;
-use App\Models\BeneficiaryDetailsBloodTransfusion
+use App\Models\BeneficiaryDetailsBloodTransfusion;
+use App\Models\Master\BloodTransfusion;
 class BeneficiaryDetailsBloodTransfusionController extends Controller
 {
     public function create() {
-    	$all_beneficiaries 	= BeneficiaryDetail::pluck('inward_number', 'id');
-    	return view('beneficiary_details.blood_transfusions.create', compact('all_beneficiaries'));
+        $all_beneficiaries      = BeneficiaryDetail::pluck('inward_number', 'id');
+    	$blood_transfusions 	= BloodTransfusion::pluck('name', 'id');
+    	return view('beneficiary_details.blood_transfusions.create', compact('all_beneficiaries', 'blood_transfusions'));
     }
 
     public function save(Request $request) { //dd(Auth::user());

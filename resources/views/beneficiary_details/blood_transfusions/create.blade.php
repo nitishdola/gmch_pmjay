@@ -30,10 +30,10 @@
                                 {!! $errors->first('beneficiary_detail_id', '<span class="help-inline">:message</span>') !!}
                               </div>
 
-                              <div class="form-group {{ $errors->has('test_name') ? 'has-error' : ''}}">
+                              <div class="form-group {{ $errors->has('blood_transfusion_id') ? 'has-error' : ''}}">
                               {!! Form::label('Name_of_Blood_Transfusion*', '', array('class' => '')) !!}
-                                  {!! Form::text('test_name', null, ['class' => 'form-control', 'id' => 'test_name', 'placeholder' => 'Test Name', 'autocomplete' => 'off']) !!}
-                                {!! $errors->first('test_name', '<span class="help-inline">:message</span>') !!}
+                                  {!! Form::select('blood_transfusion_id', $blood_transfusions, null, ['class' => 'form-control', 'id' => 'blood_transfusion_id', 'placeholder' => 'Select', 'autocomplete' => 'off']) !!}
+                                {!! $errors->first('blood_transfusion_id', '<span class="help-inline">:message</span>') !!}
                               </div>
                            </div>
                            <div class="col-md-4">
@@ -41,7 +41,7 @@
                                  <label for="name_of_patient">Beneficiary Name</label><input class="form-control" id="name_of_patient" name="name_of_patient" type="text" disabled>
                               </div>
                               <div class="form-group">
-                                 <label for="amount">Blood Transfusion Charges*</label><input class="form-control" required="true" id="amount" name="amount" type="text">
+                                 <label for="amount">Blood Transfusion Charges*</label><input class="form-control" required="true" id="amount" name="amount" type="text" readonly="true">
                               </div>
                            </div>
 

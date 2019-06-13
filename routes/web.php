@@ -14,6 +14,16 @@
 Route::get('/pass', function () {
     return Hash::make('gmch1234');
 });
+
+Route::group(['prefix' => 'cron'], function () {
+  Route::get('/', 'Cron\CronJobController@completeProcess')->name('cron.process_complete');
+});
+
+Route::group(['prefix' => 'rest'], function () {
+  Route::get('/add-claims-info', 'REST\ApiController@addClaimsInfo')->name('rest.add_claims_info');
+  Route::get('/get-blood-transfusion-info', 'REST\ApiController@getBloodTransfusionRate')->name('rest.get_blood_transfusion_info');
+});
+
 Route::get('/get-beneficiary-details', 'REST\ApiController@getBeneficiaryDetails')->name('api.beneficiary_details');
 Route::get('/get-test-details', 'REST\ApiController@labTestDetails')->name('api.test_details');
 Route::get('/get-package-details', 'REST\ApiController@pmjayPackageDetails')->name('api.pmjay.package_details');
@@ -22,6 +32,8 @@ Route::get('/get-remaining-amount', 'REST\ApiController@getBalance')->name('api.
 
 Route::get('/upload-data', 'Upload\UploadsController@uploadData')->name('updata');
 Route::post('/save-data', 'Upload\UploadsController@saveData')->name('savedata');
+
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Auth::routes();
 
@@ -133,13 +145,11 @@ Route::group(['prefix' => 'reports'], function () {
   });
 });
 
-Route::get('/logout', 'Auth\LoginController@logOut')->name('logout');
-
-Route::group(['prefix' => 'rest'], function () {
-  Route::get('/add-claims-info', 'REST\ApiController@addClaimsInfo')->name('rest.add_claims_info');
+Route::group(['prefix' => 'change-password'], function () {
+  Route::get('/', 'UsersController@changePassword')->name('change_password');
+  Route::post('/', 'UsersController@savePassword')->name('change_password.save');
 });
 
 
-Route::group(['prefix' => 'cron'], function () {
-  Route::get('/', 'Cron\CronJobController@completeProcess')->name('cron.process_complete');
-});
+
+

@@ -1,6 +1,6 @@
 @section('pageJs')
 <script>
-$('#package_id').change(function() {
+$('#package_id').bind("keyup change", function(e) {
   $package_id = $(this).val();
   
   if($package_id != '') {
@@ -20,7 +20,6 @@ $('#package_id').change(function() {
       },
 
       success : function(resp) {
-
         $.unblockUI();
         $('#package_amount').val(resp.non_nabh_package_amount);
       }

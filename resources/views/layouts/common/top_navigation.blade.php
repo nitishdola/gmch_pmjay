@@ -9,12 +9,8 @@
                         GMCH User<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#">
-                                <i class="fa fa-user"></i>My Account</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-gear"></i>Account Settings</a>
+                            <a href="{{ route('change_password') }}">
+                                <i class="fa fa-gear"></i>Change Password</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}">

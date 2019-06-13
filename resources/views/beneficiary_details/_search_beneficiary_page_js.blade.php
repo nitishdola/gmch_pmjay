@@ -1,6 +1,7 @@
 @section('pageJs')
 <script>
 $('#beneficiary_detail_id').change(function() {
+//$('#beneficiary_detail_id').bind("keyup change", function(e) {
   $beneficiary_detail_id = $(this).val();
   
   if($beneficiary_detail_id != '') {
@@ -35,11 +36,13 @@ $('#beneficiary_detail_id').change(function() {
 });
 
 
-$('#amount').keyup(function() {
+//$('#amount').keyup(function() {
+$('#amount').bind("keyup change", function(e) {
   $amount = $(this).val();
   
   $beneficiary_details_id = $('#beneficiary_detail_id').val();
 
+  if($amount != '') {
   if($beneficiary_details_id != '') {
     data = url = '';
 
@@ -85,7 +88,42 @@ $('#amount').keyup(function() {
   }else{
     alert('select beneficiary !');
   }
+  }else{
+    $('#alert').hide();
+  }
 
-})
+});
+
+$('#blood_transfusion_id').change(function() {
+  $blood_transfusion_id = $(this).val();
+
+  if($blood_transfusion_id != '') {
+    $.blockUI();
+
+    url = data = '';
+
+    data  += "&blood_transfusion_id="+$blood_transfusion_id;
+    url   += "{{ route('rest.get_blood_transfusion_info') }}";
+
+    $.ajax({
+      url : url,
+      data : data,
+      type : 'get',
+
+      error : function(resp) {
+        $.unblockUI();
+        alert('Something went wrong !');
+      },
+
+      success : function(resp) {
+        $.unblockUI();
+        //console.log(resp);
+        $('#amount').val(resp.rate);
+      }
+    });
+  }else{
+    $('#amount').val('');
+  }
+});
 </script>
 @stop
