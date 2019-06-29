@@ -9,6 +9,37 @@ use App\User;
 
 class UsersController extends Controller
 {
+
+    public function create() {
+        if(Auth::user()->role == 'admin'):
+            return view('users.create');
+        endif;
+
+    }
+
+    public function save(Request $request) {
+        if(Auth::user()->role == 'admin'):
+            $username   = trim($request->username);
+            $full_name  = trim($request->full_name);
+            $password   = Hash::make($request->password);
+
+            User::create([
+                'username' => $username,
+                'password' => $password,
+                'name'     => $full_name,
+                'role'     => $request->role,
+            ]);
+
+            return Redirect::route('user.index')->with(['message' => 'User added successfully !', 'alert-class' => 'alert-success']);
+        endif;
+    }
+
+    public function index(Request $request) {
+        $results = User::where('status',1)->get();
+        return view('users.index', compact('results'));
+    }
+
+
     public function changePassword() {
     	return view('users.change_password');
     }

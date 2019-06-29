@@ -8,6 +8,7 @@ use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon;
 use App\Models\BeneficiaryDetail;
 use App\Models\OldData\BeneficiaryDetailOldData;
 use App\Models\Master\PmjayPackage;
+use App\Models\Ward;
 
 class BeneficiaryDetailController extends Controller
 {
@@ -28,12 +29,14 @@ class BeneficiaryDetailController extends Controller
 
     public function create(Request $request) {
         $pmjay_packages = PmjayPackage::where('status', 1)->pluck('procedure_name', 'id');
+        $wards          = Ward::pluck('name', 'id');
         if($request->hospital_type == 'cancer_hospital') {
             return view('beneficiary_details.create_cancer_hospital', compact('pmjay_packages'));
         }else if($request->hospital_type == 'mmch') {
             return view('beneficiary_details.create_mmch_hospital', compact('pmjay_packages'));
         }else{
-            return view('beneficiary_details.create', compact('pmjay_packages'));
+            
+            return view('beneficiary_details.create', compact('pmjay_packages', 'wards'));
         }
         
     }
@@ -48,7 +51,12 @@ class BeneficiaryDetailController extends Controller
 
         $data['inward_number'] = strtoupper($request->inward_number);
         $data['added_by'] = Auth::user()->id;
-        $data['hospital_type'] = 'GMCH';
+        if($request->hospital_type) {
+            $data['hospital_type'] = $request->hospital_type;
+        }else{
+            $data['hospital_type'] = 'GMCH';
+        }
+        
         $data['scheme'] = 'pmjay';
 
        // dd($data);

@@ -94,6 +94,19 @@
 
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 
+    <style>
+        .bluebar {
+            background: #1e6ce8;
+            color: #FFF;
+        }
+        .bluebar li a {
+            color: #FFF !important;
+        }
+        .bluebar .logo a {
+            color: #FFF !important;
+            font-weight: bold;
+        }
+    </style>
     @yield('pageCss')
     
 </head>

@@ -33,6 +33,10 @@ Route::get('/get-remaining-amount', 'REST\ApiController@getBalance')->name('api.
 Route::get('/upload-data', 'Upload\UploadsController@uploadData')->name('updata');
 Route::post('/save-data', 'Upload\UploadsController@saveData')->name('savedata');
 
+Route::get('/upload-ward-data', 'Upload\UploadsController@uploadWards')->name('updatawards');
+Route::post('/save-ward-data', 'Upload\UploadsController@saveWards')->name('savedatawards');
+
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Auth::routes();
@@ -142,6 +146,26 @@ Route::group(['prefix' => 'reports'], function () {
 
     Route::get('/not-paid-reports', 'Reports\PmjayReportsController@beneficiaryClaimReportSha')->name('reports.pmjay.not_paid_sha');
 
+    Route::get('/investigation', 'Reports\PmjayReportsController@investigationReport')->name('reports.pmjay.investigation');
+
+    Route::get('/medicine-bills', 'Reports\PmjayReportsController@medicineReport')->name('reports.pmjay.medicine');
+
+    Route::get('/medicine-return-bills', 'Reports\PmjayReportsController@medicineReturnReport')->name('reports.pmjay.medicine_return');
+
+    Route::get('/srl', 'Reports\PmjayReportsController@srlReport')->name('reports.pmjay.srl');
+
+    Route::get('/vendor-reimbursements', 'Reports\PmjayReportsController@vendorPaymentReport')->name('reports.pmjay.vendor_reimbursement');
+
+    Route::get('/beneficiary-reimbursements', 'Reports\PmjayReportsController@beneficiaryPaymentReport')->name('reports.pmjay.beneficiary_reimbursement');
+
+    Route::get('/blood-transfusions', 'Reports\PmjayReportsController@bloodTransfusionReport')->name('reports.pmjay.blood_transfusions');
+
+    Route::get('/ot', 'Reports\PmjayReportsController@otReport')->name('reports.pmjay.ot');
+    Route::get('/icu', 'Reports\PmjayReportsController@icuReport')->name('reports.pmjay.icu');
+    Route::get('/bed', 'Reports\PmjayReportsController@bedChargeReport')->name('reports.pmjay.bed');
+    Route::get('/dialysis', 'Reports\PmjayReportsController@dialysisReport')->name('reports.pmjay.dialysis');
+    Route::get('/pet-ct', 'Reports\PmjayReportsController@petCtReport')->name('reports.pmjay.pet_ct');
+
   });
 });
 
@@ -150,6 +174,19 @@ Route::group(['prefix' => 'change-password'], function () {
   Route::post('/', 'UsersController@savePassword')->name('change_password.save');
 });
 
+
+Route::group(['prefix' => 'user'], function () {
+  Route::get('/create', 'UsersController@create')->name('user.create');
+  Route::post('/save', 'UsersController@save')->name('user.save');
+  Route::get('/', 'UsersController@index')->name('user.index');
+});
+
+
+Route::group(['prefix' => 'honorarium'], function () {
+  Route::get('/create', 'HonorariumsController@create')->name('honorarium.create');
+  Route::post('/save', 'HonorariumsController@save')->name('honorarium.save');
+  Route::get('/', 'HonorariumsController@index')->name('honorarium.index');
+});
 
 
 

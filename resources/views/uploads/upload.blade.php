@@ -9,7 +9,7 @@
 <small>Form</small>
 </div>
 <div class="card-body">
-
+{{ dump( $errors ) }}
 <form method="POST" action="{{ route('savedata') }}" enctype="multipart/form-data">
                @csrf 
 <div class="row" id="abId0.28427717104501005">

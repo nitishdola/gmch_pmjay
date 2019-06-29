@@ -29,4 +29,14 @@ class BeneficiaryInvestigation extends Model
     {
         return $this->belongsTo('App\Models\Master\LabTest');
     }
+
+    public function addedBy()
+    {
+        return $this->belongsTo('App\User', 'added_by');
+    }
+
+    public function beneficiaryDetail()
+    {
+        return $this->belongsTo('App\Models\BeneficiaryDetail', 'beneficiary_detail_id');
+    }
 }

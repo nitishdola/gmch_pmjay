@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use DB, Validator, Redirect, Auth, Crypt, Input, Excel, Carbon;
 use App\Models\BeneficiaryDetail;
 use App\Models\OldData\BeneficiaryDetailOldData;
+use App\Models\Ward;
+
 use DateTime;
 
 class UploadsController extends Controller
@@ -32,12 +34,12 @@ class UploadsController extends Controller
         }*/
 
         //exit;
-
-    	foreach($data as $k => $v) {
+        //dd($data);
+    	foreach($data[0] as $k => $v) { //
     		if($v->inward_number != '') {
                 $beneficiary_details = [];
 
-                //dd($v);
+                
 
                 $beneficiary_details['register_sl_no'] = $v->register_sl_no;
                 $beneficiary_details['name_of_patient'] = $v->name_of_patient;
@@ -151,7 +153,7 @@ class UploadsController extends Controller
 
 
 
-                    $miscellaneous_cost                 = $v->spt18 + $v->octb18 + $v->novm18 + $v->decm18 + $v->janr19 + $v->feby19 + $v->marh19 + $v->apl19+ $v->may_19;
+                    $miscellaneous_cost                 = $v->spt18 + $v->octb18 + $v->novm18 + $v->decm18 + $v->janr19 + $v->feby19 + $v->marh19 + $v->apl19+ $v->may_19+ $v->jun_19;
 
                     $old_data['miscellaneous_cost']     = $miscellaneous_cost;
 
@@ -170,7 +172,7 @@ class UploadsController extends Controller
 
                     $old_data['dialysis_cost']          = $dialysis_charge_upto_05022019+$dialysis_charge;
 
-                    $old_data['endorscopy_cost']        = $v->endorscopy_upto_05022019;
+                    $old_data['endorscopy_cost']        = $v->endorscopy_upto_05022019+$v->endoscopy;
                     $old_data['ot_cost']                = $v->ot_charge_upto_05022019+$v->ot_charge;
 
                     $bed_charge_upto_05022018 = 0;
@@ -185,8 +187,20 @@ class UploadsController extends Controller
 
 
                     $old_data['bed_cost']               = $bed_charge_upto_05022018+$bed_charge;
-                    $old_data['icu_cost']               = $v->icu_charge_upto_05022019+$v->icu_charge;
-                    $old_data['blood_transfusion_cost'] = $v->blood_transfusion_charge_upto_05022019+$v->blood_transfusion_charge;
+                    
+
+                    $icu_charge=0;
+                    if(is_numeric($v->icu_charge)) {
+                        $icu_charge = $v->icu_charge;
+                    }
+                    $old_data['icu_cost']               = $v->icu_charge_upto_05022019+$icu_charge;
+
+                    $blood_transfusion_charge = 0;
+                    if(is_numeric($v->blood_transfusion_charge)) {
+                        $blood_transfusion_charge = $v->blood_transfusion_charge;
+                    }
+
+                    $old_data['blood_transfusion_cost'] = $v->blood_transfusion_charge_upto_05022019+$blood_transfusion_charge;
 
                     $implant_cost = trim($v->implantstent);
 
@@ -200,16 +214,20 @@ class UploadsController extends Controller
                     $old_data['implant_cost']           = $implant_cost;
 
                     $old_data['vendor_reimbursement_cost']  = $v->vendors;
-                    $old_data['beneficiary_reimbursement_cost']     = $v->beneficiaries;
+                    $old_data['beneficiary_reimbursement_cost']     = 0;//$v->beneficiaries;
                     $old_data['vvi_cost']               = $v->vvi;
                     $old_data['medicine_return_cost']   = $v->medicine_return;
                     $old_data['beneficiary_ta_cost']    = $v->ta;
+
+                    //dd($old_data);
 
                     BeneficiaryDetailOldData::create($old_data);
 
                     $record++;
                 }
-    		}
+    		}else{
+                echo '<br>Inward Number '.$v->name_of_patient.'IW Number'.$v->inward_number.'  not found';
+            }
     	}
 
         DB::commit();
@@ -222,5 +240,25 @@ class UploadsController extends Controller
         $d = \DateTime::createFromFormat($format, $date);
         // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
         return $d && $d->format($format) === $date;
+    }
+
+    public function uploadWards() {
+        return view('uploads.wards');
+    }
+
+    public function saveWards(Request $request) {
+        $path = $request->file('ward_data')->getRealPath();
+        $data = Excel::load($path, function($reader) {})->get();
+
+        $record = 0;
+
+        //dd($data[0][0]);
+        foreach($data[0] as $k => $v) {
+            $ward_dta = [];
+
+            $ward_dta['name'] = $v->unit_for_admission;
+
+            Ward::create($ward_dta);
+        }
     }
 }

@@ -82,6 +82,10 @@ $hospital_cost = 0;
               </tr>
 
               <tr>
+                <th>Unit for Admission </th>
+                <td>{{ $beneficiary_details->admitWard->name }}</td>
+              </tr>
+              <tr>
                 <th>Date Of Admission </th>
                 <td>{{ date('d-m-Y', strtotime($beneficiary_details->date_of_admission)) }}</td>
               </tr>
@@ -171,7 +175,7 @@ $hospital_cost = 0;
                     $hospital_cost += $investigation_cost;
                   ?>
 
-                  {{ $investigation_cost }}
+                  <a href="{{ route('reports.pmjay.investigation', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $investigation_cost }}</a>
 
                 </td>
               </tr>
@@ -186,7 +190,7 @@ $hospital_cost = 0;
                       $hospital_cost += $dialysis_cost;
                     ?>
 
-                    {{ $dialysis_cost }}
+                    <a href="{{ route('reports.pmjay.dialysis', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $dialysis_cost }}</a>
                 </td>
               </tr>
 
@@ -199,7 +203,7 @@ $hospital_cost = 0;
 
                     $hospital_cost += $blood_transfusion_cost;
                   ?>
-                  {{ $blood_transfusion_cost }}</td>
+                  <a href="{{ route('reports.pmjay.blood_transfusions', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $blood_transfusion_cost }}</a></td>
               </tr>
 
               <tr>
@@ -224,7 +228,7 @@ $hospital_cost = 0;
 
                     $hospital_cost += $bed_cost;
                   ?>
-                {{ $bed_cost}}</td>
+                  <a href="{{ route('reports.pmjay.bed', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $bed_cost}}</a></td>
               </tr>
 
               <tr>
@@ -236,7 +240,7 @@ $hospital_cost = 0;
 
                     $hospital_cost += $icu_cost;
                   ?>
-                  {{ $icu_cost }}</td>
+                  <a href="{{ route('reports.pmjay.icu', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $icu_cost }}</a></td>
               </tr>
               
               <tr>
@@ -248,7 +252,7 @@ $hospital_cost = 0;
 
                     $hospital_cost += $ot_cost;
                   ?>
-                {{ $ot_cost }}</td>
+                <a href="{{ route('reports.pmjay.ot', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $ot_cost }}</a></td>
               </tr>
 
 
@@ -261,7 +265,7 @@ $hospital_cost = 0;
 
                     $hospital_cost += $pet_cet_cost;
                   ?>
-                  {{ $pet_cet_cost }}</td>
+                  <a href="{{ route('reports.pmjay.pet_ct', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $pet_cet_cost }}</a></td>
               </tr>
 
               <tr>
@@ -272,7 +276,7 @@ $hospital_cost = 0;
 
                     $hospital_cost += $vendor_reimbursement_cost;
                   ?>
-                <td>{{ $vendor_reimbursement_cost }}</td>
+                <td><a href="{{ route('reports.pmjay.vendor_reimbursement', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $vendor_reimbursement_cost }}</a></td>
               </tr>
 
 
@@ -289,7 +293,7 @@ $hospital_cost = 0;
                     $hospital_cost += $beneficiary_reimbursement_cost;
                   ?>
 
-                    {{ $beneficiary_reimbursement_cost }}
+                    <a href="{{ route('reports.pmjay.beneficiary_reimbursement', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $beneficiary_reimbursement_cost }}</a>
                 </td>
               </tr> 
 
@@ -303,7 +307,7 @@ $hospital_cost = 0;
                     $hospital_cost += $medicine_cost;
                   ?>
 
-                    {{ $medicine_cost }}
+                    <a href="{{ route('reports.pmjay.medicine', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $medicine_cost }}</a>
                 </td>
               </tr>
               
@@ -318,7 +322,7 @@ $hospital_cost = 0;
                     $hospital_cost = $hospital_cost - $medicine_return_cost;
                   ?>
 
-                    {{ $medicine_return_cost }}
+                    <a href="{{ route('reports.pmjay.medicine_return', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $medicine_return_cost }}</a>
                 </td>
               </tr>
 
@@ -331,7 +335,7 @@ $hospital_cost = 0;
 
                     $hospital_cost += $ta_cost;
                   ?>
-                  {{ $ta_cost }}</td>
+                  <a href="{{ route('reports.pmjay.bed', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $ta_cost }}</a></td>
               </tr>
 
 
@@ -345,7 +349,7 @@ $hospital_cost = 0;
                     $hospital_cost += $srl_cost;
                   ?>
 
-                    {{ $srl_cost }}
+                    <a href="{{ route('reports.pmjay.srl', ['beneficiary_detail_id' => $beneficiary_details->id]) }}" target="_blank">{{ $srl_cost }}</a></a>
                 </td>
               </tr>
 
@@ -360,7 +364,8 @@ $hospital_cost = 0;
 
             <tr class="warning">
               <th  style="text-align: right;">Hospital and Medicine Cost</th>
-              <td>{{ Helper::moneyFormatIndia($hospital_cost) }}</td>
+              <td>
+              {{ Helper::moneyFormatIndia($hospital_cost) }}</td>
             </tr>
 
             <tr class="success">
@@ -386,9 +391,9 @@ $hospital_cost = 0;
 
           </table>
 
-          <div class="col-md-12 clearfix" style="height: 400px;">
+          <!-- <div class="col-md-12 clearfix" style="height: 400px;">
             <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-          </div>
+          </div> -->
         </div>
         <!-- 
         <div class="tab-pane" id="tab3">

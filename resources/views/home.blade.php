@@ -48,6 +48,45 @@
                 </div>
             </div> -->
         </div>
+
+
+        <div class="widget-container stats-container">
+
+            
+
+            <div class="col-md-4">
+                <div class="number">
+                    {{ $pmjay_patients }}<small></small>
+                </div>
+                <div class="text">
+                    Patients
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="number">
+                    {{ Helper::moneyFormatIndia($pmjay_package_amount) }}
+                </div>
+                <div class="text">
+                    Total Package Amount
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="number">
+                    {{ Helper::moneyFormatIndia( $pmjay_hospital_cost) }}
+                </div>
+                <div class="text">
+                    Hospital Cost
+                </div>
+            </div>
+            <!-- <div class="col-md-3">
+                <div class="number">
+                    {{ $pmjay_amrit_cost }}
+                </div>
+                <div class="text">
+                    Pharmacy Bill
+                </div>
+            </div> -->
+        </div>
     </div>
 </div>
 @endsection

@@ -22,4 +22,14 @@ class BeneficiaryMedicine extends Model
     	'bill_date' 			=> 'required|date|date_format:Y-m-d',
         'medical_type'          => 'required',
 	];
+
+    public function addedBy()
+    {
+        return $this->belongsTo('App\User', 'added_by');
+    }
+
+    public function beneficiaryDetail()
+    {
+        return $this->belongsTo('App\Models\BeneficiaryDetail', 'beneficiary_detail_id');
+    }
 }

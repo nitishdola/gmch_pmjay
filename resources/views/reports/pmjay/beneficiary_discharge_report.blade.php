@@ -11,6 +11,8 @@
             <i class="fa fa-table"></i>PMJAY Beneficiaries not discharge for more than 45 Days
           </div>
           <div class="widget-content padded clearfix">
+
+            @if(count($results))
             <div class="table-responsive">
               <table class="table table-bordered">
               <thead>
@@ -39,6 +41,13 @@
                 @endforeach
               </tbody>
             </div>
+
+            @else
+              <div class="alert alert-warning">
+                <h2>No Results Found</h2>
+              </div>
+            @endif
+            
           </div>
         </div>
       </div>

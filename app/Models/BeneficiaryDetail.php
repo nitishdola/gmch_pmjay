@@ -9,6 +9,7 @@ class BeneficiaryDetail extends Model
     protected $fillable = array(
     	'register_sl_no',
     	'name_of_patient',
+        'ward_id',
     	'urn',
     	'date_of_admission',
     	'inward_number',
@@ -32,6 +33,7 @@ class BeneficiaryDetail extends Model
 
     public static $rules = [
     	'name_of_patient' 	=> 'required',
+        //'ward_id'           => 'required|exists:wards,id',
     	'urn' 				=> 'required',
     	'date_of_admission' => 'required|date|date_format:Y-m-d',
     	'inward_number' 	=> 'required|unique:beneficiary_details,inward_number',
@@ -46,6 +48,11 @@ class BeneficiaryDetail extends Model
     public function addedBy()
     {
         return $this->belongsTo('App\User', 'added_by');
+    }
+
+    public function admitWard()
+    {
+        return $this->belongsTo('App\Models\Ward', 'ward_id');
     }
 
     public function cancelledBy()

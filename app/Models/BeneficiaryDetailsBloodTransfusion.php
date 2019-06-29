@@ -29,4 +29,14 @@ class BeneficiaryDetailsBloodTransfusion extends Model
     {
         return $this->belongsTo('App\Models\Master\BloodTransfusion');
     }
+
+    public function addedBy()
+    {
+        return $this->belongsTo('App\User', 'added_by');
+    }
+
+    public function beneficiaryDetail()
+    {
+        return $this->belongsTo('App\Models\BeneficiaryDetail', 'beneficiary_detail_id');
+    }
 }

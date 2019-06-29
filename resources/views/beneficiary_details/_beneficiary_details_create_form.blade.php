@@ -1,15 +1,23 @@
-<div class="form-group">
+<!-- <div class="form-group">
   <label class="control-label col-md-2">Register Serial Name</label>
   <div class="col-md-3">
     <input class="form-control" placeholder="Register Serial Name" name="register_sl_no" type="text">
   </div>
-</div>
+</div> -->
 
 <div class="form-group">
   <label class="control-label col-md-2">Patient Name</label>
   <div class="col-md-3">
     <input class="form-control" placeholder="Patient Name" name="name_of_patient" type="text">
   </div>
+</div>
+
+<div class="form-group {{ $errors->has('ward_id') ? 'has-error' : ''}}">
+  {!! Form::label('unit_for_admission', '', array('class' => 'control-label col-md-2')) !!}
+    <div class="col-md-3">
+      {!! Form::select('ward_id', $wards, null, ['class' => 'select2able', 'id' => 'ward_id', 'placeholder' => 'Select Unit for Admission', 'autocomplete' => 'off']) !!}
+    </div>
+  {!! $errors->first('ward_id', '<span class="help-inline">:message</span>') !!}
 </div>
 
 <div class="form-group">
@@ -32,6 +40,10 @@
     <input class="form-control" style="text-transform: uppercase" placeholder="Inward Number" name="inward_number" type="text">
   </div>
 </div>
+
+
+
+
 
 <div class="form-group">
   <label class="control-label col-md-2">Hospital Number</label>

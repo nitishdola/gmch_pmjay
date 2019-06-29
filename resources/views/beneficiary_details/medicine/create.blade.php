@@ -7,7 +7,7 @@
       <div class="col-lg-12">
          <div class="widget-container fluid-height clearfix">
             <div class="heading">
-               <i class="fa fa-table"></i>PMJAY Beneficiaries Medicine Bill Add
+               <i class="fa fa-table"></i>PMJAY Beneficiaries Medicines and Consumables etc. add
             </div>
             <div class="widget-content padded clearfix">
               <p class="black-text" id="remb"> Remaining Balance :
