@@ -19,6 +19,7 @@
                   <th>Name</th>
                   <th>Username</th>
                   <th>Role</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,7 +28,17 @@
                     <td>{{ $k+1 }}</td>
                     <td>{{ $v->name }}</td>
                     <td>{{ $v->username }}</td> 
-                    <td>{{ strtoupper($v->role) }}
+                    <td>
+                      @if($v->role == 'accountant')
+                        Computer Assistant(Accounts)
+                      @elseif($v->role == 'ha')
+                        HA/Pharmacist
+                      @else
+                      {{ strtoupper($v->role) }}
+                      @endif
+                    </td>
+                    <td>
+                      <a href="{{ route('user.edit', Crypt::encrypt($v->id)) }}" class="btn btn-xs btn-warning">EDIT</a>
                     </td>
                 @endforeach
               </tbody>

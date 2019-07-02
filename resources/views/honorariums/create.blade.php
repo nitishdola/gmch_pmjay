@@ -7,7 +7,7 @@
       <div class="col-lg-12">
          <div class="widget-container fluid-height clearfix">
             <div class="heading">
-               <i class="fa fa-table"></i>PMJAY Add Honorarium
+               <i class="fa fa-table"></i>PMJAY Honorarium Paid to Medical Team
 
             </div>
                <div class="widget-content padded">

@@ -190,6 +190,9 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/create', 'UsersController@create')->name('user.create');
   Route::post('/save', 'UsersController@save')->name('user.save');
   Route::get('/', 'UsersController@index')->name('user.index');
+
+  Route::get('/edit/{id}', 'UsersController@edit')->name('user.edit');
+  Route::post('/update/{id}', 'UsersController@update')->name('user.update');
 });
 
 

@@ -2,8 +2,6 @@
     <div class="container-fluid top-bar bluebar">
         <div class="pull-right">
             <ul class="nav navbar-nav pull-right">
-                
-
                 @if(Auth::user()->role == 'admin')
                 <li class="dropdown user hidden-xs ">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -60,7 +58,7 @@
                 </li>
             </ul>
         </div>
-        <button class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="logo" style="color: #FFF; font-size: 14px;" href="{{ route('home') }}">Guwahati Medical College</a>
+        <button class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="logo" style="color: #FFF; font-size: 14px;" href="{{ route('home') }}">Guwahati Medical College Hospital</a>
         <div class="col-md-12" style="text-align: center; padding-top: 0.3%; font-size: 20px;"><span>Ayushman Bharat – Pradhan Mantri Jan Arogya Yojana</span></div>
     </div>
     <div class="container-fluid main-nav clearfix">
@@ -82,7 +80,7 @@
                             <a href="{{ route('beneficary_details.medicine.create') }}">Add Medicine Bill</a>
                         </li>
                         <li>
-                            <a href="{{ route('beneficary_details.medicine_return.create') }}">Add Medicine Retuen Bill</a>
+                            <a href="{{ route('beneficary_details.medicine_return.create') }}">Add Medicine Return Bill</a>
                         </li>
                         <li>
                             <a href="{{ route('beneficary_details.investigation.srl.create') }}">Add SRL Bill</a>
@@ -155,6 +153,10 @@
 
                         <li>
                             <a href="{{ route('beneficary_details.create', ['hospital_type' => 'mmch']) }}">Add New MMCH Beneficiary</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('beneficary_details.additional_package.create') }}">Add Additional Package</a>
                         </li>
 
                         

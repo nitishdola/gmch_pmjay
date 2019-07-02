@@ -40,6 +40,14 @@ class UsersController extends Controller
     }
 
 
+    public function edit($id) {
+        if(Auth::user()->role == 'admin'):
+            $user = User::findOrFail(Crypt::decrypt($id));
+            return view('users.edit', compact('user'));
+        endif;
+
+    }
+
     public function changePassword() {
     	return view('users.change_password');
     }

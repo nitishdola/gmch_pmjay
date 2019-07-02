@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="row">
-  {{ dump($errors)}}
    <div class="col-lg-12">
       <div class="col-lg-12">
          <div class="widget-container fluid-height clearfix">

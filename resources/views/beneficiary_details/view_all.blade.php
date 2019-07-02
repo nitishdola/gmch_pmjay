@@ -84,7 +84,7 @@
                     <td id="inward_{{$v->id}}">{{ $v->inward_number }}</td>
                     <td>@if($v->admitWard) {{ $v->admitWard->name }} @endif</td>
                     <td>{{ date('d-m-Y', strtotime($v->date_of_admission)) }}</td> 
-                    <td>{{ $v->package_amount }}</td>
+                    <td id="package_amount_{{$v->id}}">{{ $v->package_amount + Helper::getAdditionalPackageInfo($v->id) }}</td>
                     <td>{{ $v->total_expenditure }}</td>
                     <td>{{ number_format((float) ($v->package_amount - $v->total_expenditure), 2, '.', '')   }}</td>
                     <td id="cliams_received_{{$v->id}}">{{ $v->cliams_received }}
@@ -93,7 +93,7 @@
                     <td id="deducted_by_sha_{{$v->id}}">{{ $v->deducted_by_sha }}</td>
                     <td><a href="{{ route('beneficary_details.view_beneficiary', $v->id) }}" class="btn btn-sm btn-primary"> <i class="fa fa-info" aria-hidden="true"></i> View Details</a>
                       <br>
-                      @if(Auth::user()->role == 'accountant')
+                      @if((Auth::user()->role == 'accountant') || Auth::user()->role == 'admin')
                         @if($v->is_cancelled != 1)
                           @if($v->cliams_received <= 0)
                             <a href="javascript:void(0)" id="add_claims_info_{{$v->id}}" class="btn btn-danger btn-sm" 
@@ -106,7 +106,7 @@
                     </td>
 
                     <?php 
-                      $package_amount += $v->package_amount;
+                      $package_amount += $v->package_amount + Helper::getAdditionalPackageInfo($v->id);
                       $total_expenditure += $v->total_expenditure;
                       $remaining_balance += ($v->package_amount - $v->total_expenditure);
                       $total_cliams_received += $v->cliams_received;
@@ -159,9 +159,16 @@
           <div class="row">
             <div class="col-md-12">
 
+
+              <div class="form-group {{ $errors->has('cliams_received') ? 'has-error' : ''}}">
+              {!! Form::label('cliams_amount*', '', array('class' => '')) !!}
+              {!! Form::number('cliams_amount', null, ['class' => 'form-control', 'id' => 'packageamountmodalid', 'placeholder' => 'Claims Amount', 'autocomplete' => 'off', 'required' => 'true', 'readonly' => true]) !!}
+              {!! $errors->first('cliams_amount', '<span class="help-inline">:message</span>') !!}
+              </div>
+
               <div class="form-group {{ $errors->has('cliams_received') ? 'has-error' : ''}}">
               {!! Form::label('cliams_received*', '', array('class' => '')) !!}
-              {!! Form::number('cliams_received', null, ['class' => 'form-control', 'id' => 'cliams_received', 'placeholder' => 'Claims Received Amount', 'autocomplete' => 'off', 'required' => 'true']) !!}
+              {!! Form::number('cliams_received', null, ['class' => 'form-control', 'id' => 'cliams_received', 'placeholder' => 'Claims Received Amount', 'autocomplete' => 'off', 'required' => 'true', 'onkeyup' => 'calculateDeduction()']) !!}
               {!! $errors->first('cliams_received', '<span class="help-inline">:message</span>') !!}
               </div>
 
@@ -199,6 +206,11 @@
       $('#cliams_received').val('');
       $('#cliams_receive_date').val('');
       $('#deducted_by_sha').val('');
+      $('#package_amount').val('');
+
+
+      $packageAmount = parseFloat($('#package_amount_'+beneficiary_details_id).text());
+      $('#packageamountmodalid').val($packageAmount);
 
       $name = $('#name_'+beneficiary_details_id).text();
       $('#nm').text($name);
@@ -211,7 +223,7 @@
     } 
 
     saveClaims = function() {
-      beneficiary_details_id = $('#beneficiary_details_id').val(); console.log(beneficiary_details_id);
+      beneficiary_details_id = $('#beneficiary_details_id').val(); 
       $cliams_received = $('#cliams_received').val();
       $deducted_by_sha = $('#deducted_by_sha').val();
       $cliams_receive_date = $('#cliams_receive_date').val();
@@ -250,6 +262,17 @@
       });
 
 
+    }
+
+    calculateDeduction = function() {
+      $('#deducted_by_sha').val('');
+
+      $totalPckgAmnt = $('#packageamountmodalid').val();
+      $paidbyshaAmnt = $('#cliams_received').val();
+
+      $deduction = $totalPckgAmnt-$paidbyshaAmnt;
+
+      $('#deducted_by_sha').val($deduction);
     }
   </script>
   @stop

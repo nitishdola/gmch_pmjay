@@ -143,10 +143,10 @@
         url  : url,
         dataType : 'JSON',
 
-        success : function(resp) {
+        success : function(resp2) {
             $('#claimsReceivedInfoLoader').hide();
-            $('#claimsReceivedInfo').text(resp.amount);
-            $('#claimsReceivedInfoCount').text(resp.count);
+            $('#claimsReceivedInfo').text(resp2.amount);
+            $('#claimsReceivedInfoCount').text(resp2.count);
         }
     });
 
@@ -162,10 +162,10 @@
         url  : url,
         dataType : 'JSON',
 
-        success : function(resp) {
+        success : function(resp3) {
             $('#claimsPendingInfoLoader').hide();
-            $('#claimsPendingInfo').text(resp.amount);
-            $('#claimsPendingInfoCount').text(resp.count);
+            $('#claimsPendingInfo').text(resp3.amount);
+            $('#claimsPendingInfoCount').text(resp3.count);
         }
     });
 </script>
