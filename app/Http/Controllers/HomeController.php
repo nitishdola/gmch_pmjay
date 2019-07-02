@@ -33,7 +33,7 @@ class HomeController extends Controller
         $pmjay_patients = BeneficiaryDetail::where($pmjay_where)->count();
         $pmjay_package_amount = BeneficiaryDetail::where($pmjay_where)->sum('package_amount');
 
-        $pmjay_wherein = [];
+        /*$pmjay_wherein = [];
         $pmjay_data = BeneficiaryDetail::where($pmjay_where)->get();
         foreach($pmjay_data as $k => $v) {
             $pmjay_wherein[] = $v->id;
@@ -69,8 +69,8 @@ class HomeController extends Controller
         foreach($pmjay_amrit_cost_data as $k2 => $v2) {
             $pmjay_amrit_cost += $v2->amrit_pharmacy_cost;
             $pmjay_amrit_cost += $v2->miscellaneous_cost;
-        }
+        }*/
 
-        return view('home', compact('pmjay_patients', 'pmjay_package_amount', 'pmjay_hospital_cost', 'pmjay_amrit_cost'));
+        return view('home', compact('pmjay_patients', 'pmjay_package_amount'));
     }
 }

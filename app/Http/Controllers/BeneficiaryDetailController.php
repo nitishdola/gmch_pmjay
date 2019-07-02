@@ -14,16 +14,45 @@ class BeneficiaryDetailController extends Controller
 {
     public function viewAll(Request $request) {
     	$scheme = $request->scheme;
-    	$wherein = [];
-        $data = BeneficiaryDetail::where('scheme', $scheme)->get();
-        foreach($data as $k => $v) {
-            $wherein[] = $v->id;
+    	//$wherein = [];
+        $where = [];
+
+        $where['status'] = 1;
+
+        if($request->scheme) {
+            $scheme = $request->scheme;    
+        }else{
+            $scheme = 'pmjay';
         }
 
-    	$beneficiary_details = BeneficiaryDetail::where('scheme', $scheme)
-    							->where('status',1)
-    							->paginate(500);
+        $data = BeneficiaryDetail::where('scheme', $scheme);
+        
+        if($request->date_from) {
+            $data = $data->where('date_of_admission', '>=', date('Y-m-d', strtotime($request->date_from)));
+        }
 
+        if($request->date_to) {
+            $data = $data->where('date_of_admission', '<=', date('Y-m-d', strtotime($request->date_to)));
+        }
+
+        if($request->beneficiary_detail_id) {
+            $where['beneficiary_detail_id'] = trim($request->beneficiary_detail_id);
+        }
+
+        if($request->inward_number) {
+            $where['inward_number'] = trim($request->inward_number);
+        }
+
+        
+
+        if($request->name_of_patient) {
+            $data = $data->where('name_of_patient', 'like', '%' . $request->name_of_patient . '%');
+        }
+        
+    	$beneficiary_details = $data
+                                ->where($where)
+    							->paginate(2000);
+                                //dd($beneficiary_details);
     	return view('beneficiary_details.view_all', compact('beneficiary_details'));
     }
 

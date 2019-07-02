@@ -83,4 +83,58 @@ class ApiController extends Controller
     public function getBloodTransfusionRate(Request $request) {
         return BloodTransfusion::find($request->blood_transfusion_id);
     }
+
+    public function getPatientCount(Request $request) {
+        $where = [];
+        $where['status'] = 1;
+        if($request->date_of_admission) {
+            $where['date_of_admission'] = date('Y-m-d', strtotime($request->date_of_admission));
+        }else{
+            $where['date_of_admission'] = date('Y-m-d');
+        }
+        
+        return BeneficiaryDetail::where($where)->count();
+        //dump($res);
+    }
+
+    public function getClaimReceivedInfo(Request $request) {
+        $where = [];
+        $where['status'] = 1;
+
+        $data = BeneficiaryDetail::where('cliams_received', '!=', NULL);
+
+        $count = $data->count();
+
+        $amount = $data->sum('cliams_received');
+
+        $res = [];
+
+        $res['count'] = $count;
+        $res['amount'] = $amount;
+
+        return json_encode($res);
+    }
+
+
+    public function getPendingClaimsInfo(Request $request) {
+        $where = [];
+        $where['status'] = 1;
+        
+
+        $data = BeneficiaryDetail::where('cliams_received', NULL)->where('discharge_date', '!=', NULL);
+
+        $count = $data->count();
+
+        $amount = $data->sum('package_amount');
+
+        //additional package
+        $additional_package_amount = Helper::getAdditionalPackageInfo();
+
+        $res = [];
+
+        $res['count'] = $count;
+        $res['amount'] = $amount+$amount;
+
+        return json_encode($res);
+    }
 }

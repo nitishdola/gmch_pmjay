@@ -44,7 +44,7 @@
                      <button class="btn btn-primary px-4" type="submit">{{ __('Login') }}</button>
                   </div>
                   <div class="col-9 text-right">
-                     <a href="">Login  as Administrator</a>
+                     <!-- <a href="">Login  as Administrator</a> -->
                   </div>
                 </div>
                 </form>
@@ -53,8 +53,8 @@
          <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
             <div class="card-body text-center">
                <div>
-                  <img src="http://www.gmchassam.gov.in/images/emblem-00.gif">
-                  <img src="https://aaas-assam.in/images/abpmjaylogo.png">
+                  <img src="{{ asset('emblem-00.gif') }}">
+                  <img src="{{ asset('abpmjaylogo.png') }}">
                </div>
             </div>
          </div>

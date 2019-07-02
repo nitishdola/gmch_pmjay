@@ -64,4 +64,6 @@ class BeneficiaryDetail extends Model
     {
         return $this->belongsTo('App\Master\PmjayPackage');
     }
+
+    
 }

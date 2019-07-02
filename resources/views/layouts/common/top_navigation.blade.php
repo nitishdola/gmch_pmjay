@@ -5,11 +5,11 @@
                 
 
                 @if(Auth::user()->role == 'admin')
-                <li class="dropdown user hidden-xs">
+                <li class="dropdown user hidden-xs ">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         User Management
                         <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu bluebar">
                         <li>
                             <a href="{{ route('user.create') }}">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Create User</a>
@@ -60,7 +60,8 @@
                 </li>
             </ul>
         </div>
-        <button class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="logo" style="color: #FFF" href="{{ route('home') }}">GMCH</a>
+        <button class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="logo" style="color: #FFF; font-size: 14px;" href="{{ route('home') }}">Guwahati Medical College</a>
+        <div class="col-md-12" style="text-align: center; padding-top: 0.3%; font-size: 20px;"><span>Ayushman Bharat – Pradhan Mantri Jan Arogya Yojana</span></div>
     </div>
     <div class="container-fluid main-nav clearfix">
         <div class="nav-collapse">

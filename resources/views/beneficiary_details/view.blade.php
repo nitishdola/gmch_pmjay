@@ -83,7 +83,11 @@ $hospital_cost = 0;
 
               <tr>
                 <th>Unit for Admission </th>
-                <td>{{ $beneficiary_details->admitWard->name }}</td>
+                <td>
+                  @if($beneficiary_details->admitWard)
+                    {{ $beneficiary_details->admitWard->name }}
+                  @endif
+                </td>
               </tr>
               <tr>
                 <th>Date Of Admission </th>
@@ -163,6 +167,18 @@ $hospital_cost = 0;
               <tr>
                 <th>Package Amount </th>
                 <td>{!! Helper::getPackage($beneficiary_details->id)['amount'] !!}</td>
+              </tr>
+
+              <tr>
+                <th>
+                  Additional Package(s) Amount
+                </th>
+
+                <td>
+                  <a href="{{ route('beneficary_details.additional_package.index', ['beneficiary_detail_id' => $beneficiary_details->id]) }}"> 
+                    {{ Helper::getAdditionalPackageInfo( $beneficiary_details->id ) }}
+                  </a>
+                </td>
               </tr>
 
               <tr>
@@ -359,7 +375,11 @@ $hospital_cost = 0;
           <table class="table table-bordered table-condensed">
             <tr class="success">
               <th style="text-align: right;">Package Amount</th>
-              <td>{{ $beneficiary_details->package_amount }}</td>
+              <td>
+                
+                  {{ $beneficiary_details->package_amount + Helper::getAdditionalPackageInfo( $beneficiary_details->id )}}
+                
+              </td>
             </tr>
 
             <tr class="warning">
@@ -379,7 +399,7 @@ $hospital_cost = 0;
 
             <tr class="info">
               <td style="text-align: right;">
-                @if( ($beneficiary_details->package_amount - $hospital_cost + $medicine_return_cost) >= 0 )
+                @if( ($beneficiary_details->package_amount + Helper::getAdditionalPackageInfo( $beneficiary_details->id ) - $hospital_cost + $medicine_return_cost) >= 0 )
                   Surplus
                 @else
                   Deficit

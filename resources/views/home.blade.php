@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-4">
                 <div class="number">
-                    {{ Helper::moneyFormatIndia($pmjay_package_amount) }}
+                    {{ Helper::moneyFormatIndia($pmjay_package_amount + Helper::getAdditionalPackageInfo() ) }}
                 </div>
                 <div class="text">
                     Total Package Amount
@@ -33,20 +33,27 @@
             </div>
             <div class="col-md-4">
                 <div class="number">
-                    {{ Helper::moneyFormatIndia( $pmjay_hospital_cost) }}
+                    {{ Helper::moneyFormatIndia( 
+                            Helper::getInvestigationCost() + 
+                            Helper::getDialysisCost() +
+                            Helper::getBloodTransfusionCost() +
+                            Helper::getEndorscopyCost() +
+                            Helper::getIcuCost() +
+                            Helper::getOTCost() +
+                            Helper::getPetCetCost() +
+                            Helper::getVendorReimbursementCost() +
+                            Helper::getBeneficiaryReimbursementCost() +
+                            Helper::getMedicineCost() -
+                            Helper::getMedicineReturnCost() +
+                            Helper::getTACost() +
+                            Helper::getSRLCost()
+                        ) 
+                    }}
                 </div>
                 <div class="text">
                     Hospital Cost
                 </div>
             </div>
-            <!-- <div class="col-md-3">
-                <div class="number">
-                    {{ $pmjay_amrit_cost }}
-                </div>
-                <div class="text">
-                    Pharmacy Bill
-                </div>
-            </div> -->
         </div>
 
 
@@ -56,36 +63,38 @@
 
             <div class="col-md-4">
                 <div class="number">
-                    {{ $pmjay_patients }}<small></small>
+                    <img src="{{ asset('loader.gif') }}" style="display: none;" id="patientCountLoader" />
+                        <a href="{{ route('beneficary_details.view_all', 
+                                [
+                                    'date_from' => date('Y-m-d'),
+                                    'date_to' => date('Y-m-d'),
+                                ]) }}">
+                            <span id="patientCount"></span>
+                        </a>
+                    <small></small>
                 </div>
                 <div class="text">
-                    Patients
+                    Patient admitted on {{ date('d-m-Y') }}
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="number">
-                    {{ Helper::moneyFormatIndia($pmjay_package_amount) }}
+                    <img src="{{ asset('loader.gif') }}" style="display: none;" id="claimsReceivedInfoLoader" />
+                    <span id="claimsReceivedInfo"></span><small>( <span id="claimsReceivedInfoCount"></span> )</small>
                 </div>
                 <div class="text">
-                    Total Package Amount
+                    Claims Received 
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="number">
-                    {{ Helper::moneyFormatIndia( $pmjay_hospital_cost) }}
+                    <img src="{{ asset('loader.gif') }}" style="display: none;" id="claimsPendingInfoLoader" />
+                    <span id="claimsPendingInfo"></span><small>( <span id="claimsPendingInfoCount"></span> )</small>
                 </div>
                 <div class="text">
-                    Hospital Cost
+                    Claims Pending(After Discharge) 
                 </div>
             </div>
-            <!-- <div class="col-md-3">
-                <div class="number">
-                    {{ $pmjay_amrit_cost }}
-                </div>
-                <div class="text">
-                    Pharmacy Bill
-                </div>
-            </div> -->
         </div>
     </div>
 </div>
@@ -97,4 +106,67 @@
 <style>
 	.widget-container { font-family: 'Ubuntu', sans-serif !important; }
 </style>
+@stop
+
+@section('pageJs')
+<script>
+    data = url = '';
+
+    url += "{{ route('rest.getPatientCount') }}";
+
+    $('#patientCountLoader').show();
+    $.ajax({
+        data : data,
+        type : 'GET',
+        url  : url,
+
+        error : function(resp) {
+            alert('Oops ! Something went wrong');
+        },
+        success : function(resp) {
+            console.log(url);
+            console.log(resp);
+            $('#patientCountLoader').hide();
+            $('#patientCount').text(resp);
+        }
+    });
+
+
+    data = url = '';
+
+    url += "{{ route('rest.claims_received_data') }}";
+
+    $('#claimsReceivedInfoLoader').show();
+    $.ajax({
+        data : data,
+        type : 'GET',
+        url  : url,
+        dataType : 'JSON',
+
+        success : function(resp) {
+            $('#claimsReceivedInfoLoader').hide();
+            $('#claimsReceivedInfo').text(resp.amount);
+            $('#claimsReceivedInfoCount').text(resp.count);
+        }
+    });
+
+
+    data = url = '';
+
+    url += "{{ route('rest.claims_pending_data') }}";
+
+    $('#claimsPendingInfoLoader').show();
+    $.ajax({
+        data : data,
+        type : 'GET',
+        url  : url,
+        dataType : 'JSON',
+
+        success : function(resp) {
+            $('#claimsPendingInfoLoader').hide();
+            $('#claimsPendingInfo').text(resp.amount);
+            $('#claimsPendingInfoCount').text(resp.count);
+        }
+    });
+</script>
 @stop

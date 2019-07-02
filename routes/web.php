@@ -22,6 +22,9 @@ Route::group(['prefix' => 'cron'], function () {
 Route::group(['prefix' => 'rest'], function () {
   Route::get('/add-claims-info', 'REST\ApiController@addClaimsInfo')->name('rest.add_claims_info');
   Route::get('/get-blood-transfusion-info', 'REST\ApiController@getBloodTransfusionRate')->name('rest.get_blood_transfusion_info');
+  Route::get('/get-patient-count', 'REST\ApiController@getPatientCount')->name('rest.getPatientCount');
+  Route::get('/get-claims-received-data', 'REST\ApiController@getClaimReceivedInfo')->name('rest.claims_received_data');
+  Route::get('/get-claims-pending-data', 'REST\ApiController@getPendingClaimsInfo')->name('rest.claims_pending_data');
 });
 
 Route::get('/get-beneficiary-details', 'REST\ApiController@getBeneficiaryDetails')->name('api.beneficiary_details');
@@ -53,6 +56,14 @@ Route::group(['prefix' => 'beneficary-details'], function () {
     Route::get('/{num}', 'BeneficiaryCancelController@create')->name('beneficary_details.cancel.create');
     Route::post('/save', 'BeneficiaryCancelController@save')->name('beneficary_details.cancel.save');
   });
+
+  Route::group(['prefix' => 'additional-package'], function () {
+    Route::get('/add', 'BeneficiaryDetailsAdditionalPackagesController@create')->name('beneficary_details.additional_package.create');
+    Route::get('/', 'BeneficiaryDetailsAdditionalPackagesController@index')->name('beneficary_details.additional_package.index');
+    Route::post('/save', 'BeneficiaryDetailsAdditionalPackagesController@save')->name('beneficary_details.additional_package.save');
+  });
+
+
 
   Route::group(['prefix' => 'investigation'], function () {
   	Route::get('/add', 'BeneficiaryInvestigationController@create')->name('beneficary_details.investigation.create');

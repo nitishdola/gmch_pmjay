@@ -49,7 +49,7 @@
                       </fieldset>
                     </form>
                   </div>
-
+            @if(count($beneficiary_details))
             <div class="table-responsive">
               <?php  $count = 1; ?>
               <table class="table table-bordered">
@@ -58,6 +58,7 @@
                   <th>Sl</th>
                   <th>Name</th>
                   <th>Inward Number</th>
+                  <th>Unit for Admission</th>
                   <th>Date of Admission</th>
                   <th>Package Amount</th>
                   <th>Total Expenditure</th>
@@ -81,6 +82,7 @@
                     <td>{{ (($beneficiary_details->currentPage() - 1 ) * $beneficiary_details->perPage() ) + $count + $k }}</td>
                     <td id="name_{{ $v->id }}">{{ $v->name_of_patient }}</td>
                     <td id="inward_{{$v->id}}">{{ $v->inward_number }}</td>
+                    <td>@if($v->admitWard) {{ $v->admitWard->name }} @endif</td>
                     <td>{{ date('d-m-Y', strtotime($v->date_of_admission)) }}</td> 
                     <td>{{ $v->package_amount }}</td>
                     <td>{{ $v->total_expenditure }}</td>
@@ -106,7 +108,7 @@
                     <?php 
                       $package_amount += $v->package_amount;
                       $total_expenditure += $v->total_expenditure;
-                      $remaining_balance += $v->package_amount - $v->total_expenditure;
+                      $remaining_balance += ($v->package_amount - $v->total_expenditure);
                       $total_cliams_received += $v->cliams_received;
                       $total_deducted_by_sha += $v->deducted_by_sha;
                     ?>
@@ -116,13 +118,13 @@
 
               <tfoot>
                 <tr>
-                  <th colspan="4">
+                  <th colspan="5">
                     Total
                   </th>
 
                   <th> {{ number_format((float) ($package_amount), 2, '.', '') }}</th>
                   <th> {{ number_format((float) ($total_expenditure), 2, '.', '') }}</th>
-                  <th> {{ number_format((float) ($total_expenditure), 2, '.', '') }}</th>
+                  <th> {{ number_format((float) ($remaining_balance), 2, '.', '') }}</th>
                   <th> {{ number_format((float) ($total_cliams_received), 2, '.', '') }}</th>
                   <th> {{ number_format((float) ($total_deducted_by_sha), 2, '.', '') }}</th>
               </tfoot>
@@ -130,6 +132,11 @@
 
             {{ $beneficiary_details->appends($_GET)->links() }}
             </div>
+            @else
+              <div class="alert alert-warning">
+                <h3>NO RESULTS FOUND</h3>
+              </div>
+            @endif
           </div>
         </div>
       </div>
